@@ -3,7 +3,8 @@
 abstract sig Type {
     superEffectiveAgainst: set Type,    // 2x damage
     notVeryEffectiveAgainst: set Type,  // 0.5x damage
-    noEffectAgainst: set Type           // 0x damage  
+    noEffectAgainst: set Type,           // 0x damage  
+    score: one Int
 }
 
 one sig Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison,
@@ -119,4 +120,40 @@ pred typeProperties {
     darkTypeProperties
     steelTypeProperties
     fairyTypeProperties
+}
+
+fun weakTo[t:Type]: set Type {
+    { atk: Type | t in atk.superEffectiveAgainst }
+}
+
+fun resistantTo[t:Type]: set Type {
+    { atk: Type | t in atk.notVeryEffectiveAgainst }
+}
+
+fun immuneTo[t:Type]: set Type {
+    { atk: Type | t in atk.noEffectAgainst }
+}
+
+fun countWeakTo[t:Type]:Int {
+    #{type: Type | type in weakTo[t]}
+}
+
+fun countResistantTo[t:Type]:Int {
+    #{type: Type | type in resistantTo[t]}
+}
+
+fun countImmuneTo[t:Type]:Int {
+    #{type: Type | type in immuneTo[t]}
+}
+
+fun countSuperEffective[t:Type]:Int {
+    #{type: Type | type in t.superEffectiveAgainst}
+}
+
+fun countNotVeryEffective[t:Type]:Int {
+    #{type: Type | type in t.notVeryEffectiveAgainst}
+}
+
+fun countNoEffect[t:Type]:Int {
+    #{type: Type | type in t.noEffectAgainst}
 }
