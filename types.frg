@@ -199,8 +199,4 @@ fun netStrengthValue[t:Type]:Int {
     add[offensiveScoreValue[t], defensiveScoreValue[t]]
 }
 
-pred showTypeScores {
-    typeProperties
-}
-
-run showTypeScores for 6 Int
+run typeProperties
