@@ -4,7 +4,6 @@ abstract sig Type {
     superEffectiveAgainst: set Type,    // 2x damage
     notVeryEffectiveAgainst: set Type,  // 0.5x damage
     noEffectAgainst: set Type,           // 0x damage  
-    score: one Int
 }
 
 one sig Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison,
