@@ -157,3 +157,31 @@ fun countNotVeryEffective[t:Type]:Int {
 fun countNoEffect[t:Type]:Int {
     #{type: Type | type in t.noEffectAgainst}
 }
+
+// VERY basic heuristic for def/atk values
+// def val = resist + immunities - weaknesses
+// atk val = superEffective - (notVeryEffective + 2*noEffect)
+
+fun defensiveScoreValue[t:Type]:Int {
+    subtract[
+        add[countResistantTo[t], countImmuneTo[t]], 
+        countWeakTo[t]
+    ]
+}
+
+fun offensiveScoreValue[t: Type]: Int {
+    subtract[
+        countSuperEffective[t],
+        add[countNotVeryEffective[t],multiply[countNoEffect[t],2]]
+    ]
+}
+
+fun netStrengthValue[t:Type]:Int {
+    add[offensiveScoreValue[t], defensiveScoreValue[t]]
+}
+
+pred showTypeScores {
+    typeProperties
+}
+
+run showTypeScores for 6 Int
