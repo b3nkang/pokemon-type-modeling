@@ -120,6 +120,25 @@ pred typeProperties {
     darkTypeProperties
     steelTypeProperties
     fairyTypeProperties
+
+    Normal.score = netStrengthValue[Normal]
+    Fire.score = netStrengthValue[Fire]
+    Water.score = netStrengthValue[Water]
+    Grass.score = netStrengthValue[Grass]
+    Electric.score = netStrengthValue[Electric]
+    Ice.score = netStrengthValue[Ice]
+    Fighting.score = netStrengthValue[Fighting]
+    Poison.score = netStrengthValue[Poison]
+    Ground.score = netStrengthValue[Ground]
+    Flying.score = netStrengthValue[Flying]
+    Psychic.score = netStrengthValue[Psychic]
+    Bug.score = netStrengthValue[Bug]
+    Rock.score = netStrengthValue[Rock]
+    Ghost.score = netStrengthValue[Ghost]
+    Dragon.score = netStrengthValue[Dragon]
+    Dark.score = netStrengthValue[Dark]
+    Steel.score = netStrengthValue[Steel]
+    Fairy.score = netStrengthValue[Fairy]
 }
 
 fun weakTo[t:Type]: set Type {
