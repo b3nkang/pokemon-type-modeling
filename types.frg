@@ -3,12 +3,20 @@
 abstract sig Type {
     superEffectiveAgainst: set Type,    // 2x damage
     notVeryEffectiveAgainst: set Type,  // 0.5x damage
-    noEffectAgainst: set Type,           // 0x damage  
+    noEffectAgainst: set Type           // 0x damage  
 }
 
 one sig Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison,
     Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel,
     Fairy extends Type {}
+
+sig Pokemon {
+    types: set Type // one or two types
+}
+
+sig Team {
+    members: set Pokemon
+}
 
 pred normalTypeProperties {
     Normal.superEffectiveAgainst = none
@@ -120,3 +128,49 @@ pred typeProperties {
     steelTypeProperties
     fairyTypeProperties
 }
+
+// Checks if an attacker can OHKO a defender
+pred canOHKO [attacker: Pokemon, defender: Pokemon]{
+    some atkType : Type, defType : Type | {
+        atkType in attacker.types 
+        defType in defender.types 
+        defType in atkType.superEffectiveAgainst
+    }
+}
+
+// Checks if the attacking team can OHKO the entire defending team
+pred canFullyOHKO [attackingTeam: Team, defendingTeam: Team]{
+    all def: Pokemon | {
+        def in defendingTeam.members implies {
+            some atk: Pokemon | {
+                atk in attackingTeam.members
+                canOHKO[atk, def]
+            }
+        }
+    }
+}
+
+// Enforces each pokemon has 1 or 2 types
+pred numTypes {
+    all pok : Pokemon | {
+        #{pok.types} = 1 or #{pok.types} = 2
+    }
+}
+
+// Enforces team sizes
+pred teamSize {
+    all t : Team | {
+        #{t.members} = 2
+    }
+}
+
+pred main {
+    typeProperties
+    some t1, t2 : Team | {
+        canFullyOHKO[t1,t2]
+    }
+    numTypes
+    teamSize
+}
+
+run main
