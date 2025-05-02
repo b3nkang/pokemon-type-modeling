@@ -129,12 +129,19 @@ pred typeProperties {
     fairyTypeProperties
 }
 
-// Checks if an attacker can OHKO a defender
+// To do: Add the more complex interactions described in the readme (particularly cancelling out the super effective)
+// Simplified version that accounts for basic dual-type interactions
 pred canOHKO [attacker: Pokemon, defender: Pokemon]{
-    some atkType : Type, defType : Type | {
-        atkType in attacker.types 
-        defType in defender.types 
-        defType in atkType.superEffectiveAgainst
+    some atkType : attacker.types | {
+        // Attack is super-effective against at least one type
+        some defType : defender.types | defType in atkType.superEffectiveAgainst
+        
+        // No defending type provides immunity
+        all defType : defender.types | defType not in atkType.noEffectAgainst
+        
+        // No defending type cuts the effect in half
+        
+        all defType : defender.types | defType not in atkType.notVeryEffectiveAgainst
     }
 }
 
