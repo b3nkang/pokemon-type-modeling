@@ -265,6 +265,8 @@ pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
     defPok.attacking = False
 }
 
+// --------- WELLFORMEDNESS PREDICATES ---------
+
 // Enforces each pokemon has 1 or 2 types
 pred numTypes {
     all pok : Pokemon | {
@@ -272,11 +274,26 @@ pred numTypes {
     }
 }
 
-// Enforces team sizes
-pred teamSize {
+// Enforces well-formed teams
+pred teamProperties {
+    // each team has 2 pokemon
     all t : Team | {
         #{t.members} = 2
     }
+    // each pokemon is unique
+    // (technically not true but for uniqueness purposes)
+    some pok1, pok2 : Pokemon, t : Team | {
+        pok1 in t.members
+        pok2 in t.members
+        pok1 != pok2
+    }
+    // each team has unique pokemon 
+    // (technically not true but for uniqueness purposes)
+    some t1, t2 : Team | {
+        t1 != t2
+        no (t1.members & t2.members)
+    }
+    // FIX NEEDED: each pokemon can only be on one team
 }
 
 pred main {
