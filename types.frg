@@ -133,6 +133,47 @@ pred typeProperties {
     fairyTypeProperties
 }
 
+pred isSuperEffectiveAgainst[ atkType:Type, defType:Type ]{
+    defType in atkType.superEffectiveAgainst
+}
+
+pred isNotVeryEffectiveAgainst[ atkType:Type, defType:Type ]{
+    defType in atkType.notVeryEffectiveAgainst
+}
+
+pred isNoEffectAgainst[ atkType:Type, defType:Type ]{
+    defType in atkType.noEffectAgainst
+}
+
+// Case: x2 attack against one type, with no resistance/immunity on other type
+pred normalNetSuperEffective[ attacker:Pokemon, defender:Pokemon ]{
+    // just find ONE defType that is weak to the atkType
+    some atkType : attacker.types | {
+        some defType : defender.types | isSuperEffectiveAgainst[atkType,defType]
+        all defType : defender.types | {
+            not isNotVeryEffectiveAgainst[atkType,defType]
+            not isNoEffectAgainst[atkType,defType]
+        }
+    }
+    // note this can still generate compounded x4 attacks, but does not force it
+}
+
+// Case: x2 attack against both types
+pred compoundedSuperEffective[ attacker:Pokemon, defender:Pokemon ]{
+    // find BOTH defTypes that are weak to the atkType
+    some atkType : attacker.types | {
+        all defType : defender.types | isSuperEffectiveAgainst[atkType,defType]
+    }
+}
+
+// Case: x2 attack against one type, x0.5 attack against the other type
+pred hasNeutralization[attacker:Pokemon, defender:Pokemon] {
+    some atkType : attacker.types, defType1, defType2 : defender.types | {
+        isSuperEffectiveAgainst[atkType,defType1] and isNotVeryEffectiveAgainst[atkType,defType2]
+    }
+}
+
+// Question about this below, "cancelling out the super effective" ==> how exactly
 // To do: Add the more complex interactions described in the readme (particularly cancelling out the super effective)
 // Simplified version that accounts for basic dual-type interactions
 pred canOHKO [attacker: Pokemon, defender: Pokemon]{
