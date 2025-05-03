@@ -176,17 +176,36 @@ pred hasNeutralization[attacker:Pokemon, defender:Pokemon] {
 // Question about this below, "cancelling out the super effective" ==> how exactly
 // To do: Add the more complex interactions described in the readme (particularly cancelling out the super effective)
 // Simplified version that accounts for basic dual-type interactions
-pred canOHKO [attacker: Pokemon, defender: Pokemon]{
-    some atkType : attacker.types | {
-        // Attack is super-effective against at least one type
-        some defType : defender.types | defType in atkType.superEffectiveAgainst
-        
-        // No defending type provides immunity
-        all defType : defender.types | defType not in atkType.noEffectAgainst
-        
-        // No defending type cuts the effect in half
-        
-        all defType : defender.types | defType not in atkType.notVeryEffectiveAgainst
+pred can1v1OHKO [attacker: Pokemon, defender: Pokemon]{
+    normalNetSuperEffective[attacker, defender] or compoundedSuperEffective[attacker, defender]
+    setPokemonAttackingStatus[attacker, defender]
+}
+
+// Implement compounded weakness
+// ==> Implement instance generation given two defender types (done)
+
+// Implement compounded resistance (??)
+// Implement immunity (??)
+// ==> Implement instance generation given two attacker types (done)
+
+// Implement counts based on characteristics of types, such as:
+    // type coverage count, then find best coverage (most hits against super effective)
+    // type weakness count, then find least weaknesses
+    // net effective weakness count, then find best net
+// ==> use best characteristic preds ALONGSIDE instance generation given two pokemon to find edge cases
+
+// an extension: implement intelligent OHKO with turns possibly
+
+
+// Checks if the attacking team can OHKO the entire defending team
+pred can2v2OHKO [attackingTeam: Team, defendingTeam: Team]{
+    all defPok: Pokemon | {
+        defPok in defendingTeam.members implies {
+            some atkPok: Pokemon | {
+                atkPok in attackingTeam.members
+                can1v1OHKO[atkPok,defPok]
+            }
+        }
     }
 }
 
