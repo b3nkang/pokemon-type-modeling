@@ -1,5 +1,8 @@
 #lang forge
 
+abstract sig Bool {}
+one sig True, False extends Bool {}
+
 abstract sig Type {
     superEffectiveAgainst: set Type,    // 2x damage
     notVeryEffectiveAgainst: set Type,  // 0.5x damage
