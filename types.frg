@@ -246,16 +246,23 @@ pred setOnePokemonOnTeam[team: Team, pokTypes: Type, findAdditionalType: Bool]{
     }
 }
 
-// Checks if the attacking team can OHKO the entire defending team
-pred canFullyOHKO [attackingTeam: Team, defendingTeam: Team]{
-    all def: Pokemon | {
-        def in defendingTeam.members implies {
-            some atk: Pokemon | {
-                atk in attackingTeam.members
-                canOHKO[atk, def]
-            }
+// Helper for logic if FindAdditionalType is specified for setting team preds
+pred applyFindAdditionalType[pokTypes: set Type, pok : Pokemon]{
+    #{pokTypes} = 1 implies {
+        some type: Type | {
+            type & pokTypes = none
+            pok.types = type + pokTypes
         }
     }
+    #{pokTypes} = 2 implies {
+        pok.types = pokTypes
+    }
+}
+
+// Helper pred to clarify which pokemon is attacking during can1v1OHKO and can2v2OHKO preds
+pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
+    atkPok.attacking = True
+    defPok.attacking = False
 }
 
 // Enforces each pokemon has 1 or 2 types
