@@ -14,7 +14,8 @@ one sig Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison,
     Fairy extends Type {}
 
 sig Pokemon {
-    types: set Type // one or two types
+    types: set Type, // one or two types
+    attacking: one Bool
 }
 
 sig Team {
