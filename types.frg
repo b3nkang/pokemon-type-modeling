@@ -296,13 +296,18 @@ pred teamProperties {
     // FIX NEEDED: each pokemon can only be on one team
 }
 
-pred main {
+// -------------- RUN PREDICATES ---------------
+pred Battle2v2 {
     typeProperties
-    some t1, t2 : Team | {
-        canFullyOHKO[t1,t2]
+    some disj atkTeam,defTeam : Team | {
+        can2v2OHKO[atkTeam,defTeam]
+        setBothPokemonOnTeam[defTeam, Bug + Steel, Dark + Poison, False]
     }
     numTypes
-    teamSize
-}
+    teamProperties
+} 
 
-run main
+// IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
+//                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
+//                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
+run Battle2v2 for 6 Int
