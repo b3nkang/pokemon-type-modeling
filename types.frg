@@ -209,6 +209,43 @@ pred can2v2OHKO [attackingTeam: Team, defendingTeam: Team]{
     }
 }
 
+// --------- SPECIFICATION PREDICATES ---------
+
+// Helper pred for solver to find matchups given BOTH pokemon on a team
+// Can also find one addition type of pokemon if FindAdditionalType is True
+// Note: findAdditionalType should only be True if at least one of the pokemon ONLY has 1 type, but if not, it will still work
+pred setBothPokemonOnTeam[team: Team, p1Types: set Type, p2Types: set Type, findAdditionalType: Bool]{
+    // must be different pokemon
+    some disj pok1, pok2: Pokemon | {
+        team.members = pok1 + pok2 
+
+        findAdditionalType = True implies {
+            applyFindAdditionalType[p1Types,pok1]
+            applyFindAdditionalType[p2Types,pok2]
+        }
+        findAdditionalType = False implies {
+            pok1.types = p1Types
+            pok2.types = p2Types
+        }
+    }
+}
+
+// Helper pred for solver to find matchups given ONE pokemon on a DEFENDING team
+// Can also find one addition type of pokemon if FindAdditionalType is True
+// Note: findAdditionalType should only be True if at least one of the pokemon ONLY has 1 type, but if not, it will still work
+pred setOnePokemonOnTeam[team: Team, pokTypes: Type, findAdditionalType: Bool]{
+    // set the types of the pokemon in the defending team
+    some pok : Pokemon | {
+        team.members & pok = pok
+        findAdditionalType = True implies {
+            applyFindAdditionalType[pokTypes,pok]
+        }
+        findAdditionalType = False implies {
+            pok.types = pokTypes
+        }
+    }
+}
+
 // Checks if the attacking team can OHKO the entire defending team
 pred canFullyOHKO [attackingTeam: Team, defendingTeam: Team]{
     all def: Pokemon | {
