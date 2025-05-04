@@ -22,6 +22,11 @@ sig Team {
     members: set Pokemon
 }
 
+// Top meta Pokémon from World Championships - for reference
+// per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-masters
+// one sig Urshifu_WF, Miraidon_ED, Ogerpon_G, Farigiraf_NP, 
+//     Whimsicott_GF, Calyrex_PI extends Pokemon {}
+
 pred normalTypeProperties {
     Normal.superEffectiveAgainst = none
     Normal.notVeryEffectiveAgainst = Rock + Steel
@@ -276,6 +281,28 @@ pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
     atkPok.attacking = True
     defPok.attacking = False
 }
+
+// Setting up the meta Pokémon types
+// pred setupMetaPokemon {
+//     // Urshifu (Water/Fighting) - most common, appeared in 7/8 teams
+//     Urshifu_WF.types = Water + Fighting
+    
+//     // Miraidon (Electric/Dragon) - appeared in 3/8 teams
+//     Miraidon_ED.types = Electric + Dragon
+    
+//     // Ogerpon (Grass) - appeared in 4/8 teams
+//     Ogerpon_G.types = Grass
+    
+//     // Farigiraf (Normal/Psychic) - appeared in 3/8 teams
+//     Farigiraf_NP.types = Normal + Psychic
+    
+//     // Whimsicott (Grass/Fairy) - appeared in 2/8 teams
+//     Whimsicott_GF.types = Grass + Fairy
+    
+//     // Calyrex (Psychic/Ice) - appeared in 3/8 teams
+//     Calyrex_PI.types = Psychic + Ice
+// }
+
 
 // --------- WELLFORMEDNESS PREDICATES ---------
 

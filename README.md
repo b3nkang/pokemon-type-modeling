@@ -1,5 +1,3 @@
-Here's the properly formatted README:
-
 # Pokémon Type Advantage Team Builder
 
 ## Overview
