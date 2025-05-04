@@ -198,7 +198,7 @@ pred can1v1OHKO [attacker: Pokemon, defender: Pokemon]{
 
 
 // Checks if the attacking team can OHKO the entire defending team
-pred can2v2OHKO [attackingTeam: Team, defendingTeam: Team]{
+pred oldCan2v2OHKO [attackingTeam: Team, defendingTeam: Team]{
     all defPok: Pokemon | {
         defPok in defendingTeam.members implies {
             some atkPok: Pokemon | {
@@ -287,13 +287,12 @@ pred teamProperties {
         pok2 in t.members
         pok1 != pok2
     }
-    // each team has unique pokemon 
-    // (technically not true but for uniqueness purposes)
-    some t1, t2 : Team | {
-        t1 != t2
-        no (t1.members & t2.members)
-    }
-    // FIX NEEDED: each pokemon can only be on one team
+
+    // each pok must belong to exactly one team
+    all pok: Pokemon | one t: Team | pok in t.members
+
+    // only two teams
+    #Team = 2
 }
 
 // -------------- RUN PREDICATES ---------------
