@@ -197,6 +197,18 @@ pred can1v1OHKO [attacker: Pokemon, defender: Pokemon]{
 // an extension: implement intelligent OHKO with turns possibly
 
 
+// New updated version: there is no 1-to-2 mapping where 1 attacker can OHKO 2 defenders, since at a minimum we should enforce each pokemon moves once bc of "speed"
+// Checks if the attacking team can OHKO the defending team
+pred can2v2OHKO [attackingTeam: Team, defendingTeam: Team]{
+    some disj defPok1, defPok2: Pokemon | {
+        defendingTeam.members = defPok1 + defPok2
+        some disj atkPok1, atkPok2: Pokemon | {
+            attackingTeam.members = atkPok1 + atkPok2
+            (can1v1OHKO[atkPok1,defPok1] and can1v1OHKO[atkPok2,defPok2]) or (can1v1OHKO[atkPok1,defPok2] and can1v1OHKO[atkPok2,defPok1])
+        }
+    }
+}
+
 // Checks if the attacking team can OHKO the entire defending team
 pred oldCan2v2OHKO [attackingTeam: Team, defendingTeam: Team]{
     all defPok: Pokemon | {
