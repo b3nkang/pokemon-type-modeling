@@ -280,12 +280,10 @@ pred teamProperties {
     all t : Team | {
         #{t.members} = 2
     }
-    // each pokemon is unique
-    // (technically not true but for uniqueness purposes)
-    some pok1, pok2 : Pokemon, t : Team | {
-        pok1 in t.members
-        pok2 in t.members
-        pok1 != pok2
+
+    // teams are unique
+    all disj t1, t2: Team | {
+        t1.members & t2.members = none
     }
 
     // each pok must belong to exactly one team
