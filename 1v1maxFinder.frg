@@ -1,8 +1,8 @@
 #lang forge
 
-// ------------- ADD DECK HERE ------------- //
-open "decks/2024worlds.frg"           //
-// otherwise it's not visible to the finder  //
+// ---------------- ADD DECK HERE ----------------- //
+open "decks/2024Worlds.frg"
+// --- otherwise it's not visible to the finder --- //
 
 open "types.frg"
 open "1v1.frg"
