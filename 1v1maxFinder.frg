@@ -3,6 +3,10 @@
 open "types.frg"
 open "1v1.frg"
 
+// ------------- ADD DECK HERE ------------- //
+open "1v1deck2024worlds.frg"                 //
+// otherwise it's not visible to the finder  //
+
 test expect {
     setupAndTypes: {
         typeProperties
@@ -142,4 +146,6 @@ test expect {
             hasAtLeastNOHKOsInSet[breaker, metaSet, 12]
         }
     } for 6 Int is sat
+
+    // NOTE: we may need to add more for VERY NARROW cases where metas are a) massive and b) have insane overlap, but I don't foresee this
 }
