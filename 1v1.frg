@@ -11,6 +11,10 @@ sig Pokemon {
     attacking: one Bool
 }
 
+one sig Count {
+    count: one Int
+}
+
 // --------- BATTLE PREDICATES ---------
 
 pred isSuperEffectiveAgainst[ atkType:Type, defType:Type ]{
@@ -105,7 +109,6 @@ pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon] {
     }
 }
 
-
 // --------- WELLFORMEDNESS PREDICATES ---------
 
 // Enforces each pokemon has 1 or 2 types
@@ -121,7 +124,6 @@ pred attackerOnlyConstraint {
     }
 }
 
-
 // -------------- RUN PREDICATES ---------------
 pred Battle1v1MetaBasic {
     typeProperties
@@ -133,4 +135,3 @@ pred Battle1v1MetaBasic {
 //                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
 //                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
 run Battle1v1MetaBasic for 6 Int
-// run Battle1v1MaxCoverage for 6 Int
