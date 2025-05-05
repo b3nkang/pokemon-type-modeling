@@ -11,6 +11,8 @@ sig Pokemon {
     attacking: one Bool
 }
 
+// --------- BATTLE PREDICATES ---------
+
 pred isSuperEffectiveAgainst[ atkType:Type, defType:Type ]{
     defType in atkType.superEffectiveAgainst
 }
@@ -74,12 +76,12 @@ pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
 // Top meta Pokémon from World Championships - for reference
 // per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-masters
 one sig MetaBreaker, Miraidon_ED, Ogerpon_G, 
-    Whimsicott_GF, Calyrex_PI extends Pokemon {}
+    Farigiraf_NP, Calyrex_PI, Urshifu_WF extends Pokemon {}
 
 // Setting up the meta Pokémon types
 pred setupMetaPokemon {
     // Urshifu (Water/Fighting) - most common, appeared in 7/8 teams
-    // Urshifu_WF.types = Water + Fighting
+    Urshifu_WF.types = Water + Fighting
     
     // Miraidon (Electric/Dragon) - appeared in 3/8 teams
     Miraidon_ED.types = Electric + Dragon
@@ -88,10 +90,10 @@ pred setupMetaPokemon {
     Ogerpon_G.types = Grass
     
     // Farigiraf (Normal/Psychic) - appeared in 3/8 teams
-    // Farigiraf_NP.types = Normal + Psychic
+    Farigiraf_NP.types = Normal + Psychic
     
     // Whimsicott (Grass/Fairy) - appeared in 2/8 teams
-    Whimsicott_GF.types = Grass + Fairy
+    // Whimsicott_GF.types = Grass + Fairy
     
     // Calyrex (Psychic/Ice) - appeared in 3/8 teams
     Calyrex_PI.types = Psychic + Ice
@@ -113,16 +115,22 @@ pred numTypes {
     }
 }
 
+pred attackerOnlyConstraint {
+    all p: Pokemon | {
+        p.attacking = True implies p = MetaBreaker
+    }
+}
+
+
 // -------------- RUN PREDICATES ---------------
-pred Battle1v1Meta {
+pred Battle1v1MetaBasic {
     typeProperties
     numTypes
     setupMetaPokemon
-    metaBreaker[MetaBreaker, Miraidon_ED+Ogerpon_G+Whimsicott_GF+Calyrex_PI]
-
+    metaBreaker[MetaBreaker, Miraidon_ED+Ogerpon_G+Farigiraf_NP+Calyrex_PI+Urshifu_WF]
 }
-
 // IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
 //                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
 //                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
-run Battle1v1Meta for 6 Int
+run Battle1v1MetaBasic for 6 Int
+// run Battle1v1MaxCoverage for 6 Int
