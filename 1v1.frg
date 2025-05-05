@@ -65,8 +65,19 @@ pred can1v1OHKO [attacker: Pokemon, defender: Pokemon]{
     setPokemonAttackingStatus[attacker, defender]
 }
 
-// --------- SPECIFICATION PREDICATES ---------
+// ------------ COUNTER PREDICATES ------------
 
+fun countOHKOs[breaker: Pokemon, metaPokemon: set Pokemon]: one Int {
+    #{metaPok: Pokemon | metaPok in metaPokemon and can1v1OHKO[breaker, metaPok]}
+}
+
+// used in maxFinder.frg to find the theoretical max number of OHKOs in a set
+pred hasAtLeastNOHKOsInSet[breaker: Pokemon, metaPokemon: set Pokemon, n: Int] {
+    breaker not in metaPokemon
+    countOHKOs[breaker, metaPokemon] >= n
+}
+
+// --------- SPECIFICATION PREDICATES ---------
 
 // Helper pred to clarify which pokemon is attacking during can1v1OHKO and can2v2OHKO preds
 pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
