@@ -1,11 +1,11 @@
 #lang forge
 
+// ------------- ADD DECK HERE ------------- //
+open "decks/2024worlds.frg"           //
+// otherwise it's not visible to the finder  //
+
 open "types.frg"
 open "1v1.frg"
-
-// ------------- ADD DECK HERE ------------- //
-open "1v1deck2024worlds.frg"                 //
-// otherwise it's not visible to the finder  //
 
 test expect {
     setupAndTypes: {
