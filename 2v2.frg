@@ -161,37 +161,37 @@ pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
 
 // --------- META POKEMON PREDICATES ---------
 
-// Top meta Pokémon from World Championships - for reference
-// per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-masters
-one sig MetaBreaker, Miraidon_ED, Ogerpon_G, 
-    Whimsicott_GF, Calyrex_PI extends Pokemon {}
+// // Top meta Pokémon from World Championships - for reference
+// // per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-masters
+// one sig MetaBreaker, Miraidon_ED, Ogerpon_G, 
+//     Whimsicott_GF, Calyrex_PI extends Pokemon {}
 
-// Setting up the meta Pokémon types
-pred setupMetaPokemon {
-    // Urshifu (Water/Fighting) - most common, appeared in 7/8 teams
-    // Urshifu_WF.types = Water + Fighting
+// // Setting up the meta Pokémon types
+// pred setupMetaPokemon {
+//     // Urshifu (Water/Fighting) - most common, appeared in 7/8 teams
+//     // Urshifu_WF.types = Water + Fighting
     
-    // Miraidon (Electric/Dragon) - appeared in 3/8 teams
-    Miraidon_ED.types = Electric + Dragon
+//     // Miraidon (Electric/Dragon) - appeared in 3/8 teams
+//     Miraidon_ED.types = Electric + Dragon
     
-    // Ogerpon (Grass) - appeared in 4/8 teams
-    Ogerpon_G.types = Grass
+//     // Ogerpon (Grass) - appeared in 4/8 teams
+//     Ogerpon_G.types = Grass
     
-    // Farigiraf (Normal/Psychic) - appeared in 3/8 teams
-    // Farigiraf_NP.types = Normal + Psychic
+//     // Farigiraf (Normal/Psychic) - appeared in 3/8 teams
+//     // Farigiraf_NP.types = Normal + Psychic
     
-    // Whimsicott (Grass/Fairy) - appeared in 2/8 teams
-    Whimsicott_GF.types = Grass + Fairy
+//     // Whimsicott (Grass/Fairy) - appeared in 2/8 teams
+//     Whimsicott_GF.types = Grass + Fairy
     
-    // Calyrex (Psychic/Ice) - appeared in 3/8 teams
-    Calyrex_PI.types = Psychic + Ice
-}
+//     // Calyrex (Psychic/Ice) - appeared in 3/8 teams
+//     Calyrex_PI.types = Psychic + Ice
+// }
 
-pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon] {
-    all metaPok : Pokemon | metaPok in metaPokemon implies {
-        can1v1OHKO[breaker,metaPok]
-    }
-}
+// pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon] {
+//     all metaPok : Pokemon | metaPok in metaPokemon implies {
+//         can1v1OHKO[breaker,metaPok]
+//     }
+// }
 
 
 // --------- WELLFORMEDNESS PREDICATES ---------
@@ -233,18 +233,8 @@ pred Battle2v2 {
     teamProperties
 } 
 
-pred Battle1v1Meta {
-    typeProperties
-    numTypes
-    setupMetaPokemon
-    // some metaBreakerPok : Pokemon | { metaBreaker[metaBreakerPok,Urshifu_WF+Miraidon_ED+Ogerpon_G+Farigiraf_NP+Whimsicott_GF+Calyrex_PI] }
-    // some metaBreakerPok : Pokemon | { metaBreaker[metaBreakerPok,Miraidon_ED+Ogerpon_G+Whimsicott_GF+Calyrex_PI] }
-    metaBreaker[MetaBreaker, Miraidon_ED+Ogerpon_G+Whimsicott_GF+Calyrex_PI]
-
-}
 
 // IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
 //                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
 //                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
-// run Battle2v2 for 6 Int
-run Battle1v1Meta for 6 Int
+run Battle2v2 for 6 Int
