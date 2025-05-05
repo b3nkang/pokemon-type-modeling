@@ -6,12 +6,12 @@ open "../1v1.frg"
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
 // --------- BELOW, NEW DECK: DEFINE POKEMON SIGS IN DECK -----------
-// use format PokemonName_WF, where W and F are the pokemon's type(s)'
-// first initial. if the pokemon only has one type, just include the one.
+// format: PokemonNameWF, where W and F are each the first initial of the
+// pokemon's type(s). if the pokemon only has one type, just include the one.
 
 one sig 
-Placeholder1_WR,
-Placeholder2_S
+Placeholder1WR,
+Placeholder2S
 extends Pokemon {}
 
 
@@ -20,7 +20,7 @@ extends Pokemon {}
 // this func is used throughout the 1v1.frg logic so you must fill it.
 
 fun metaSet: set Pokemon {
-    Placeholder1_WR + Placeholder2_S
+    Placeholder1WR + Placeholder2S
 }
 
 
@@ -29,8 +29,8 @@ fun metaSet: set Pokemon {
 // format: PokemonName.types = TypeName1 + TypeName2IfApplicable
 
 pred setupMetaPokemon {
-    Placeholder1_WR.types = Water + Rock
-    Placeholder2_S.types = Steel
+    Placeholder1WR.types = Water + Rock
+    Placeholder2S.types = Steel
 }
 
 
