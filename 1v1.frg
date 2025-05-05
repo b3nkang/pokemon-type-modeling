@@ -11,6 +11,8 @@ sig Pokemon {
     attacking: one Bool
 }
 
+one sig MetaBreaker extends Pokemon {} // this is the solver's pokemon
+
 one sig Count {
     count: one Int
 }
@@ -76,56 +78,7 @@ pred hasAtLeastNOHKOsInSet[breaker: Pokemon, metaPokemon: set Pokemon, n: Int] {
     countOHKOs[breaker, metaPokemon] >= n
 }
 
-
-// --------- SPECIFICATION PREDICATES ---------
-
-// Helper pred to clarify which pokemon is attacking during can1v1OHKO and can2v2OHKO preds
-pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
-    atkPok.attacking = True
-    defPok.attacking = False
-}
-
-
-// --------- META POKEMON PREDICATES ---------
-
-// Top meta Pokémon from World Championships - for reference
-// per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-masters
-one sig 
-MetaBreaker, 
-Miraidon_ED, 
-Ogerpon_G, 
-Farigiraf_NP,
-Calyrex_PI,
-Urshifu_WF,
-Whimsicott_GF
-extends Pokemon {}
-
-fun metaSet: set Pokemon {
-    Miraidon_ED + Ogerpon_G + Farigiraf_NP + Calyrex_PI + Urshifu_WF + Whimsicott_GF
-}
-
-// Setting up the meta Pokémon types
-pred setupMetaPokemon {
-    // Urshifu (Water/Fighting) - most common, appeared in 7/8 teams
-    Urshifu_WF.types = Water + Fighting
-    
-    // Miraidon (Electric/Dragon) - appeared in 3/8 teams
-    Miraidon_ED.types = Electric + Dragon
-    
-    // Ogerpon (Grass) - appeared in 4/8 teams
-    Ogerpon_G.types = Grass
-    
-    // Farigiraf (Normal/Psychic) - appeared in 3/8 teams
-    Farigiraf_NP.types = Normal + Psychic
-    
-    // Whimsicott (Grass/Fairy) - appeared in 2/8 teams
-    Whimsicott_GF.types = Grass + Fairy
-    
-    // Calyrex (Psychic/Ice) - appeared in 3/8 teams
-    Calyrex_PI.types = Psychic + Ice
-}
-
-// Assumes we have already found the max number of OHKOs for a given meta
+// used in runs to find all instances of types against a given meta that will deliver n KOs
 pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon, nKOs: Int] {
     countOHKOs[breaker, metaPokemon] = nKOs
     all otherTestPokemon: Pokemon | {
@@ -133,6 +86,15 @@ pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon, nKOs: Int] {
         countOHKOs[otherTestPokemon, metaPokemon] <= nKOs
     }
     Count.count = nKOs
+}
+
+
+// --------- SPECIFICATION PREDICATES ---------
+
+// Helper pred to clarify which pokemon is attacking during can1v1OHKO and can2v2OHKO preds
+pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
+    atkPok.attacking = True
+    defPok.attacking = False
 }
 
 
@@ -154,15 +116,15 @@ pred setAttackingStatus {
 
 // -------------- RUN PREDICATES ---------------
 
-pred Battle1v1Meta {
-    typeProperties
-    numTypes
-    setupMetaPokemon
-    metaBreaker[MetaBreaker, metaSet, 5]
-    setAttackingStatus
-}
+// pred Battle1v1Meta [n : Int] {
+//     typeProperties
+//     numTypes
+//     setupMetaPokemon
+//     metaBreaker[MetaBreaker,metaSet,n]
+//     setAttackingStatus
+// }
 
 // IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
 //                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
 //                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
-run Battle1v1MetaBasic for 6 Int
+// run {Battle1v1Meta[5]} for 6 Int
