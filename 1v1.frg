@@ -114,7 +114,8 @@ pred setAttackingStatus {
 }
 
 
-// -------------- RUN PREDICATES ---------------
+// // ---------------------- RUN PREDICATES ------------------------
+// // note: code below will not run and does not do anything, only for visual reference
 
 // pred Battle1v1Meta [n : Int] {
 //     typeProperties
