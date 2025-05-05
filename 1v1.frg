@@ -15,6 +15,7 @@ one sig Count {
     count: one Int
 }
 
+
 // --------- BATTLE PREDICATES ---------
 
 pred isSuperEffectiveAgainst[ atkType:Type, defType:Type ]{
@@ -29,7 +30,7 @@ pred isNoEffectAgainst[ atkType:Type, defType:Type ]{
     defType in atkType.noEffectAgainst
 }
 
-// Case: x2 attack against one type, with no resistance/immunity on other type
+// case: x2 attack against one type, with no resistance/immunity on other type
 pred normalNetSuperEffective[ attacker:Pokemon, defender:Pokemon ]{
     // just find ONE defType that is weak to the atkType
     some atkType : attacker.types | {
@@ -42,7 +43,7 @@ pred normalNetSuperEffective[ attacker:Pokemon, defender:Pokemon ]{
     // note this can still generate compounded x4 attacks, but does not force it
 }
 
-// Case: x2 attack against both types
+// case: x2 attack against both types
 pred compoundedSuperEffective[ attacker:Pokemon, defender:Pokemon ]{
     // find BOTH defTypes that are weak to the atkType
     some atkType : attacker.types | {
@@ -50,16 +51,14 @@ pred compoundedSuperEffective[ attacker:Pokemon, defender:Pokemon ]{
     }
 }
 
-// Case: x2 attack against one type, x0.5 attack against the other type
+// case: x2 attack against one type, x0.5 attack against the other type
 pred hasNeutralization[attacker:Pokemon, defender:Pokemon] {
     some atkType : attacker.types, defType1, defType2 : defender.types | {
         isSuperEffectiveAgainst[atkType,defType1] and isNotVeryEffectiveAgainst[atkType,defType2]
     }
 }
 
-// Question about this below, "cancelling out the super effective" ==> how exactly
-// To do: Add the more complex interactions described in the readme (particularly cancelling out the super effective)
-// Simplified version that accounts for basic dual-type interactions
+// fundamental OHKO predicate that determines if a given pokemon can OHKO another
 pred can1v1OHKO [attacker: Pokemon, defender: Pokemon]{
     normalNetSuperEffective[attacker, defender] or compoundedSuperEffective[attacker, defender]
     setPokemonAttackingStatus[attacker, defender]
@@ -71,7 +70,7 @@ fun countOHKOs[breaker: Pokemon, metaPokemon: set Pokemon]: one Int {
     #{metaPok: Pokemon | metaPok in metaPokemon and can1v1OHKO[breaker, metaPok]}
 }
 
-// Find a Pokémon with at least n OHKOs
+// used in maxFinder.frg to find the theoretical max number of OHKOs in a set
 pred hasAtLeastNOHKOsInSet[breaker: Pokemon, metaPokemon: set Pokemon, n: Int] {
     breaker not in metaPokemon
     countOHKOs[breaker, metaPokemon] >= n
@@ -79,7 +78,6 @@ pred hasAtLeastNOHKOsInSet[breaker: Pokemon, metaPokemon: set Pokemon, n: Int] {
 
 
 // --------- SPECIFICATION PREDICATES ---------
-
 
 // Helper pred to clarify which pokemon is attacking during can1v1OHKO and can2v2OHKO preds
 pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
@@ -137,6 +135,7 @@ pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon, nKOs: Int] {
     Count.count = nKOs
 }
 
+
 // --------- WELLFORMEDNESS PREDICATES ---------
 
 // Enforces each pokemon has 1 or 2 types
@@ -146,11 +145,12 @@ pred numTypes {
     }
 }
 
-pred attackerOnlyConstraint {
+pred setAttackingStatus {
     all p: Pokemon | {
         p.attacking = True implies p = MetaBreaker
     }
 }
+
 
 // -------------- RUN PREDICATES ---------------
 
@@ -159,7 +159,7 @@ pred Battle1v1Meta {
     numTypes
     setupMetaPokemon
     metaBreaker[MetaBreaker, metaSet, 5]
-    attackerOnlyConstraint
+    setAttackingStatus
 }
 
 // IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
