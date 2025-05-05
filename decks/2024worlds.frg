@@ -12,7 +12,7 @@ open "../1v1.frg"
 
 one sig 
 MiraidonED, 
-OgerponG, 
+OgerponTealG, 
 FarigirafNP,
 CalyrexPI,
 UrshifuRapidStrikeWF,
@@ -23,7 +23,7 @@ extends Pokemon {}
 // --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
 
 fun metaSet: set Pokemon {
-    MiraidonED + OgerponG + FarigirafNP + CalyrexPI + UrshifuRapidStrikeWF + WhimsicottGF
+    MiraidonED + OgerponTealG + FarigirafNP + CalyrexPI + UrshifuRapidStrikeWF + WhimsicottGF
 }
 
 
@@ -37,7 +37,7 @@ pred setupMetaPokemon {
     MiraidonED.types = Electric + Dragon
     
     // Ogerpon (Grass) - appeared in 4/8 teams
-    OgerponG.types = Grass
+    OgerponTealG.types = Grass
     
     // Farigiraf (Normal/Psychic) - appeared in 3/8 teams
     FarigirafNP.types = Normal + Psychic
