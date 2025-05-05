@@ -1,7 +1,7 @@
 #lang forge
 
 // ---------------- ADD DECK HERE ----------------- //
-open "decks/2024Worlds.frg"
+open "decks/2025EUIC.frg"
 // --- otherwise it's not visible to the finder --- //
 
 open "types.frg"
