@@ -153,12 +153,15 @@ pred attackerOnlyConstraint {
 }
 
 // -------------- RUN PREDICATES ---------------
-pred Battle1v1MetaBasic {
+
+pred Battle1v1Meta {
     typeProperties
     numTypes
     setupMetaPokemon
-    metaBreaker[MetaBreaker, Miraidon_ED+Ogerpon_G+Farigiraf_NP+Calyrex_PI+Urshifu_WF]
+    metaBreaker[MetaBreaker, metaSet, 5]
+    attackerOnlyConstraint
 }
+
 // IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
 //                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
 //                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
