@@ -11,42 +11,42 @@ open "../1v1.frg"
 // --------- NEW DECK: DEFINE POKEMON SIGS IN META -----------
 
 one sig 
-Miraidon_ED, 
-Ogerpon_G, 
-Farigiraf_NP,
-Calyrex_PI,
-Urshifu_WF,
-Whimsicott_GF
+MiraidonED, 
+OgerponG, 
+FarigirafNP,
+CalyrexPI,
+UrshifuRapidStrikeWF,
+WhimsicottGF
 extends Pokemon {}
 
 
 // --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
 
 fun metaSet: set Pokemon {
-    Miraidon_ED + Ogerpon_G + Farigiraf_NP + Calyrex_PI + Urshifu_WF + Whimsicott_GF
+    MiraidonED + OgerponG + FarigirafNP + CalyrexPI + UrshifuRapidStrikeWF + WhimsicottGF
 }
 
 
 // ---------- POKEMON TYPES: SET UP DECK TYPES HERE ----------
 
 pred setupMetaPokemon {
-    // Urshifu (Water/Fighting) - most common, appeared in 7/8 teams
-    Urshifu_WF.types = Water + Fighting
+    // UrshifuRapidStrike (Water/Fighting) - most common, appeared in 7/8 teams
+    UrshifuRapidStrikeWF.types = Water + Fighting
     
     // Miraidon (Electric/Dragon) - appeared in 3/8 teams
-    Miraidon_ED.types = Electric + Dragon
+    MiraidonED.types = Electric + Dragon
     
     // Ogerpon (Grass) - appeared in 4/8 teams
-    Ogerpon_G.types = Grass
+    OgerponG.types = Grass
     
     // Farigiraf (Normal/Psychic) - appeared in 3/8 teams
-    Farigiraf_NP.types = Normal + Psychic
+    FarigirafNP.types = Normal + Psychic
     
     // Whimsicott (Grass/Fairy) - appeared in 2/8 teams
-    Whimsicott_GF.types = Grass + Fairy
+    WhimsicottGF.types = Grass + Fairy
     
     // Calyrex (Psychic/Ice) - appeared in 3/8 teams
-    Calyrex_PI.types = Psychic + Ice
+    CalyrexPI.types = Psychic + Ice
 }
 
 
