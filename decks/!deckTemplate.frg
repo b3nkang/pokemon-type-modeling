@@ -6,7 +6,7 @@ open "../1v1.frg"
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
 // --------- BELOW, NEW DECK: DEFINE POKEMON SIGS IN DECK -----------
-// format: PokemonNameWF, where W and F are each the first initial of the
+// format: PokemonNameWR, where W and R are each the first initial of the
 // pokemon's type(s). if the pokemon only has one type, just include the one.
 
 one sig 
