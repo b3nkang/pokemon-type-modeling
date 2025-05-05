@@ -71,13 +71,15 @@ fun countOHKOs[breaker: Pokemon, metaPokemon: set Pokemon]: one Int {
     #{metaPok: Pokemon | metaPok in metaPokemon and can1v1OHKO[breaker, metaPok]}
 }
 
-// used in maxFinder.frg to find the theoretical max number of OHKOs in a set
+// Find a Pokémon with at least n OHKOs
 pred hasAtLeastNOHKOsInSet[breaker: Pokemon, metaPokemon: set Pokemon, n: Int] {
     breaker not in metaPokemon
     countOHKOs[breaker, metaPokemon] >= n
 }
 
+
 // --------- SPECIFICATION PREDICATES ---------
+
 
 // Helper pred to clarify which pokemon is attacking during can1v1OHKO and can2v2OHKO preds
 pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
@@ -90,8 +92,19 @@ pred setPokemonAttackingStatus[atkPok: Pokemon, defPok: Pokemon]{
 
 // Top meta Pokémon from World Championships - for reference
 // per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-masters
-one sig MetaBreaker, Miraidon_ED, Ogerpon_G, 
-    Farigiraf_NP, Calyrex_PI, Urshifu_WF extends Pokemon {}
+one sig 
+MetaBreaker, 
+Miraidon_ED, 
+Ogerpon_G, 
+Farigiraf_NP,
+Calyrex_PI,
+Urshifu_WF,
+Whimsicott_GF
+extends Pokemon {}
+
+fun metaSet: set Pokemon {
+    Miraidon_ED + Ogerpon_G + Farigiraf_NP + Calyrex_PI + Urshifu_WF + Whimsicott_GF
+}
 
 // Setting up the meta Pokémon types
 pred setupMetaPokemon {
@@ -108,16 +121,20 @@ pred setupMetaPokemon {
     Farigiraf_NP.types = Normal + Psychic
     
     // Whimsicott (Grass/Fairy) - appeared in 2/8 teams
-    // Whimsicott_GF.types = Grass + Fairy
+    Whimsicott_GF.types = Grass + Fairy
     
     // Calyrex (Psychic/Ice) - appeared in 3/8 teams
     Calyrex_PI.types = Psychic + Ice
 }
 
-pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon] {
-    all metaPok : Pokemon | metaPok in metaPokemon implies {
-        can1v1OHKO[breaker,metaPok]
+// Assumes we have already found the max number of OHKOs for a given meta
+pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon, nKOs: Int] {
+    countOHKOs[breaker, metaPokemon] = nKOs
+    all otherTestPokemon: Pokemon | {
+        (otherTestPokemon != breaker and otherTestPokemon not in metaPokemon) implies
+        countOHKOs[otherTestPokemon, metaPokemon] <= nKOs
     }
+    Count.count = nKOs
 }
 
 // --------- WELLFORMEDNESS PREDICATES ---------
