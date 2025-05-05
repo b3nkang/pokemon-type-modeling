@@ -1,9 +1,9 @@
 #lang forge
 
-open "types.frg"
-open "1v1.frg"
+open "../types.frg"
+open "../1v1.frg"
 
-// ---- INCLUDE ABOVE ALWAYS ----- //
+// ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
 // Top meta Pokémon from World Championships - for reference
 // per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-masters
