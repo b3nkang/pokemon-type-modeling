@@ -1,9 +1,5 @@
 #lang forge
 
-// ---------------- ADD DECK HERE ----------------- //
-open "decks/2024Juniors.frg"
-// --- otherwise it's not visible to the finder --- //
-
 open "types.frg"
 
 abstract sig Bool {}
@@ -148,17 +144,17 @@ pred setAttackingStatus {
 }
 
 
-// ---------------------- RUN PREDICATES ------------------------
+// // ---------------------- RUN PREDICATES ------------------------
 
-pred Battle2vMeta [n : Int] {
-    typeProperties
-    numTypes
-    setupMetaPokemon
-    teamMetaBreaker[MetaBreaker, MetaBreaker2, metaSet, n]
-    setAttackingStatus
-}
+// pred Battle2vMeta [n : Int] {
+//     typeProperties
+//     numTypes
+//     setupMetaPokemon
+//     teamMetaBreaker[MetaBreaker, MetaBreaker2, metaSet, n]
+//     setAttackingStatus
+// }
 
-// IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
-//                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
-//                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
-run {Battle2vMeta[6]} for 6 Int
+// // IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
+// //                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
+// //                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
+// run {Battle2vMeta[6]} for 6 Int
