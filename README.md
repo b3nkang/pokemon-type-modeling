@@ -1,70 +1,66 @@
-# Pokémon Type Advantage Team Builder
+# Pokémon Type Advantage Modeling
+CS 1710 – Logic for Systems
 
-## Overview
+## Project Overview
 
-This Forge model simulates the type-effectiveness system from Pokémon games to answer an interesting question: given information about an opponent's team composition, can we create an attacking team where at least one member can defeat each defending Pokémon through super-effective type matchups?
+This project uses formal verification through the Forge modeling language to analyze Pokémon type matchups and competitive team building strategies. We explore optimal counter-strategies across different competitive formats and eras by modeling the complex type effectiveness system from Pokémon games.
 
-The model focuses purely on the "rock-paper-scissors" nature of Pokémon type advantages, removing all numerical stats and embracing a simplified One-Hit Knockout (OHKO) system based solely on type effectiveness.
+## Model Structure & Design Decisions
 
-A fundamental principle of Pokémon is the idea that trainers should be able to build teams with their favorite Pokémon while still having viable strategies against any opponent. This tension between using preferred Pokémon and maintaining competitive viability is at the heart of the gameplay. This model explores whether it's always possible to construct a counter-team with complete type coverage, or if there exist defensive team compositions that cannot be fully countered through type advantages alone.
+Our model is structured around three core components:
 
-## Concept
+1. **Type System (`types.frg`)**: Models all 18 Pokémon types and their effectiveness relationships.
+2. **1vM Analysis (`1vM.frg`)**: Finds a single Pokémon with optimal type coverage against a meta.
+3. **2vM Analysis (`2vM.frg`)**: Finds a pair of Pokémon with optimal combined type coverage.
 
-In Pokémon, certain types are super-effective against others (dealing 2x damage), not very effective (0.5x damage), or have no effect (0x damage). This creates a complex web of advantages and disadvantages, especially when Pokémon can have dual types.
+### Key Design Tradeoffs
 
-This model explores whether, given information about a defending team, we can always construct an attacking team where:
-- Each member of the defending team can be defeated by at least one attacker through type advantage
-- The model considers all 18 Pokémon types and their complex interaction matrix
-
-## Dual-Type Effectiveness Interactions
-
-When a Pokémon has two types, the offensive effectiveness against it follows multiplicative rules, creating several important scenarios:
-
-1. **Neutralization**: When one type is super-effective (2x) against a defending type, but the defender's second type is not very effective (0.5x) against it, these effects multiply to create normal effectiveness (2x × 0.5x = 1x)
-   - Example: A Water/Ice Pokémon would take normal damage from Grass attacks (super-effective against Water, but not very effective against Ice)
-
-2. **Compounded Weakness**: When both types share a weakness, the Pokémon becomes doubly weak (2x × 2x = 4x)
-   - Example: A Bug/Grass type would take 4x damage from Fire attacks
-
-3. **Compounded Resistance**: When both types resist the same attack type, the Pokémon becomes doubly resistant (0.5x × 0.5x = 0.25x)
-   - Example: A Water/Dragon type would take only 0.25x damage from Water attacks
-
-4. **Immunity Override**: An immunity (0x) from one type will always override any effectiveness from the other type (2x × 0x = 0x)
-   - Example: A Ground/Ghost type is immune to Normal attacks despite not being weak to any particular type
-
-These interaction rules create significant strategic depth in team building, as carefully chosen dual-types can neutralize what would otherwise be clear type disadvantages.
-
-Note: The current model simplifies this by considering an attack successful if it's super-effective against at least one of the defender's types, without accounting for potential neutralization from the second type.
-
-## Key Components
-
-### Type System
-- Implements all 18 Pokémon types: Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison, Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel, and Fairy
-- Each type has defined relationships with other types (super-effective, not very effective, no effect)
-- These relationships form the core logic of the battle system
-
-### Pokémon & Team Structure
-- Pokémon can have one or two types (enforced by the `numTypes` predicate)
-- Teams consist of multiple Pokémon (in the example, team size is set to 2)
-- The `members` relation connects teams to their Pokémon
-
-### Battle Logic
-- `canOHKO` predicate: Determines if an attacker can One-Hit KO a defender based on type advantage
-- `canFullyOHKO` predicate: Checks if an attacking team can collectively OHKO all members of a defending team
-
-## Interesting Problem
-
-The model explores an interesting question in Pokémon team building: given any possible defending team, can we always construct an attacking team that has at least one super-effective matchup against each defending Pokémon?
-
-Due to the complex web of type interactions and dual-typing possibilities, this isn't trivial to prove mathematically. The Forge model helps explore this space by:
-1. Finding examples where such an attacking team exists
-2. Potentially identifying situations where it's impossible to build a team with complete type coverage
+The most significant tradeoff was simplifying the damage calculation system to focus solely on type advantages. In the actual games, damage is determined by numerous factors (stats, moves, abilities, items). We simplified this to a binary OHKO (One-Hit Knockout) model based only on type effectiveness, which allowed us to focus on finding optimal type combinations.
 
 
-## Future Extensions
+### Scope Assumptions & Limitations
 
-Possible extensions to this model could include:
-- Expanding to larger team sizes (i.e. 6, which is the standard in the games)
-- Adding move types separate from Pokémon types
-- Incorporating the full dual-type effectiveness calculations
-- Exploring minimal team composition that can counter any possible defending team
+Our model makes several simplifying assumptions:
+- Pokémon can only have up to 2 types (authentic to the games)
+- All moves are STAB (Same Type Attack Bonus) moves
+- No items, abilities, or other modifiers affect type relationships
+- No consideration of move selection (only type-based attacks)
+- No difference in the amount of damage that attacks deal
+
+The primary limitation is that our model doesn't account for cases where a player could use strategy to overcome their Pokémon's type weakness, for example with things like status conditions, abilities, etc. However, this was a necessary limitation to focus the scope of our project.
+
+## Goal Evolution
+
+Our original proposal focused simply on finding anomalies within the type system, such as types that perform unusually well or unusually poorly within the system as a whole. While we were able to achieve this, it was still far from the complexity and nuance in professional Pokémon, which led to us thinking about looking at different metas.
+
+This shift allowed us to create a model that not only works with theoretical type matchups but actually provides actionable insights for competitive players by identifying optimal counter-picks for specific tournament formats and eras.
+
+## Understanding Model Instances
+
+An instance of our model represents a hypothetical Pokémon with a specific type combination that can counter a certain number of Pokémon in a given meta. For example, the model can show that a Flying/Rock type Pokémon can defeat 6 out of 8 Pokémon in the 2025 EUIC meta.
+
+The model uses the concept of "OHKO" (One-Hit Knockout) based on type advantages. A Pokémon can OHKO another if at least one of its types is super-effective against one of the target's types, without being resisted or negated by the target's other type.
+
+In 2vM analysis, an instance shows a pair of Pokémon that together can counter a maximum number of meta Pokémon, representing an optimal team core for countering a specific metagame.
+
+We unfortunately did not have the time to develop a custom visualization, but the table view within Sterling is sufficient to see which types the solution chooses against the given meta.
+
+## Key Findings
+
+Our most interesting result came from the 2025 EUIC analysis, where we found that no single Pokémon type combination can counter more than 6 out of 8 meta Pokémon (75% coverage). However, we identified exactly six type combinations that achieve this maximum: Flying/Rock, Flying/Fairy, Flying/Steel, Flying/Fighting, Flying/Ground, and Ice/Rock.
+
+The prevalence of Flying combinations in optimal counters reveals interesting structural features of the current meta, highlighting the effectiveness of Flying-type attacks against the Grass and Fighting types that dominate competitive play.
+
+
+## Future Directions
+
+Future work could focus on:
+- Expanding to 6v6 team analysis (more realistic to the game)
+- Adding move type modeling distinct from Pokémon typing
+- Implementing full dual-type effectiveness calculations with proper neutralization
+- Exploring historical meta shifts through formal analysis
+- Identifying theoretical "perfect coverage" teams
+
+---
+
+**Collaborators**: Jonathan Becker, Ben Kang, Camilo Tamayo-Rousseau

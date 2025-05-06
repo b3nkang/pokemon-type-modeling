@@ -88,48 +88,88 @@ pred Battle1v1Meta [n : Int] {
 run { Battle1v1Meta[6] } for 6 Int
 
 // RUN RESULTS: 
-// - the maximum number of KOs in this meta is 6 for an optimal matchup
-// - 6 types can achieve 6 KOs:
+// - The maximum number of KOs in this meta is 6 out of 8 Pokémon
+// - 6 different type combinations can achieve exactly 6 KOs:
 //      - Flying/Rock:
-//              Defeats...
-//                  Amoonguss (Grass Weakness), Ogerpon Hearthflame Mask (Grass Weakness),
-//                  Rillabom (Grass Weakness),  Incineroar (Dark Weakness), Chien-Pao (Ice Weakness)
-//              Cannot OHKO...
-//                  Flutter Mane (Ghost/Fairy), Raging Bolt (Electric/Dragon)
-//              Example Pokemon inclue...
-//                  Aerodactyl, Archeops
-//      - Flying/Fairy
-//              Defeats...
-//                  TODO:
-//              Cannot OHKO...
-//                  TODO:
-//              Example Pokemon inclue...
-//                  TODO:
-//      - Flying/Steel
-//              Defeats...
-//                  TODO:
-//              Cannot OHKO...
-//                  TODO:
-//              Example Pokemon inclue...
-//                  TODO:
-//      - Flying/Fighting
-//              Defeats...
-//                  TODO:
-//              Cannot OHKO...
-//                  TODO:
-//              Example Pokemon inclue...
-//                  TODO:
-//      - Flying/Ground
-//              Defeats...
-//                  TODO:
-//              Cannot OHKO...
-//                  TODO:
-//              Example Pokemon inclue...
-//                  TODO:
-//      - Ice/Rock
-//              Defeats...
-//                  TODO:
-//              Cannot OHKO...
-//                  TODO:
-//              Example Pokemon inclue...
-//                  TODO:
+//              Defeats (6):
+//                  Urshifu (Water/Fighting - weak to Flying)
+//                  Amoonguss (Grass/Poison - weak to Flying)
+//                  Rillaboom (Grass - weak to Flying)
+//                  Incineroar (Fire/Dark - weak to Rock)
+//                  Ogerpon Hearthflame (Grass/Fire - weak to Flying and Rock)
+//                  Chien-Pao (Dark/Ice - weak to Rock)
+//              Cannot OHKO (2):
+//                  Flutter Mane (Ghost/Fairy - no weakness to Flying or Rock)
+//                  Raging Bolt (Electric/Dragon - Electric resists Flying)
+//              Example Pokémon:
+//                  Aerodactyl, Archeops, Minior
+//
+//      - Flying/Fairy:
+//              Defeats (6):
+//                  Urshifu (Water/Fighting - weak to Flying and Fairy)
+//                  Amoonguss (Grass/Poison - Grass weak to Flying, Poison weak to Fairy)
+//                  Rillaboom (Grass - weak to Flying)
+//                  Incineroar (Fire/Dark - Dark weak to Fairy)
+//                  Ogerpon Hearthflame (Grass/Fire - Grass weak to Flying)
+//                  Raging Bolt (Electric/Dragon - Dragon weak to Fairy)
+//              Cannot OHKO (2):
+//                  Flutter Mane (Ghost/Fairy - Fairy resists Fairy)
+//                  Chien-Pao (Dark/Ice - Dark weak to Fairy but Ice resists Fairy)
+//              Example Pokémon:
+//                  Togekiss, Mega Altaria
+//
+//      - Flying/Steel:
+//              Defeats (6):
+//                  Urshifu (Water/Fighting - weak to Flying)
+//                  Amoonguss (Grass/Poison - Grass weak to Flying, Poison weak to Steel)
+//                  Rillaboom (Grass - weak to Flying and Steel)
+//                  Ogerpon Hearthflame (Grass/Fire - Grass weak to Flying)
+//                  Flutter Mane (Ghost/Fairy - Fairy weak to Steel)
+//                  Chien-Pao (Dark/Ice - Ice weak to Steel)
+//              Cannot OHKO (2):
+//                  Incineroar (Fire/Dark - Fire resists Steel)
+//                  Raging Bolt (Electric/Dragon - Electric resists Flying)
+//              Example Pokémon:
+//                  Skarmory, Corviknight, Celesteela
+//
+//      - Flying/Fighting:
+//              Defeats (6):
+//                  Urshifu (Water/Fighting - weak to Flying)
+//                  Amoonguss (Grass/Poison - Grass weak to Flying)
+//                  Rillaboom (Grass - weak to Flying)
+//                  Incineroar (Fire/Dark - Dark weak to Fighting)
+//                  Ogerpon Hearthflame (Grass/Fire - Grass weak to Flying)
+//                  Chien-Pao (Dark/Ice - Dark and Ice both weak to Fighting)
+//              Cannot OHKO (2):
+//                  Flutter Mane (Ghost/Fairy - Ghost immune to Fighting)
+//                  Raging Bolt (Electric/Dragon - Electric resists Flying)
+//              Example Pokémon:
+//                  Hawlucha
+//
+//      - Flying/Ground:
+//              Defeats (6):
+//                  Urshifu (Water/Fighting - Fighting weak to Flying)
+//                  Amoonguss (Grass/Poison - Grass weak to Flying, Poison weak to Ground)
+//                  Rillaboom (Grass - weak to Flying)
+//                  Incineroar (Fire/Dark - Fire weak to Ground)
+//                  Ogerpon Hearthflame (Grass/Fire - Grass weak to Flying, Fire weak to Ground)
+//                  Chien-Pao (Dark/Ice - Ice weak to Ground)
+//              Cannot OHKO (2):
+//                  Flutter Mane (Ghost/Fairy - Ghost immune to Ground)
+//                  Raging Bolt (Electric/Dragon - Electric resists Flying)
+//              Example Pokémon:
+//                  Gliscor, Landorus, Gligar, Flygon, Garchomp
+//
+//      - Ice/Rock:
+//              Defeats (6):
+//                  Urshifu (Water/Fighting - Fighting weak to Rock)
+//                  Amoonguss (Grass/Poison - Grass weak to Ice)
+//                  Rillaboom (Grass - weak to Ice)
+//                  Incineroar (Fire/Dark - Fire weak to Rock)
+//                  Ogerpon Hearthflame (Grass/Fire - Grass weak to Ice, Fire weak to Rock)
+//                  Raging Bolt (Electric/Dragon - Dragon weak to Ice)
+//              Cannot OHKO (2):
+//                  Flutter Mane (Ghost/Fairy - no weakness to Ice or Rock)
+//                  Chien-Pao (Dark/Ice - Ice resists Ice)
+//              Example Pokémon:
+//                  Aurorus, Amaura
