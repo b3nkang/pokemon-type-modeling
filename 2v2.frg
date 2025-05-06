@@ -27,24 +27,49 @@ OgerponTealG,
 FarigirafNP,
 CalyrexPI,
 UrshifuRapidStrikeWF,
-WhimsicottGF
+WhimsicottGF,
+IncineroarFD,
+AmoongussGP,
+RillaboomG,
+OgerponHearthflameGF,
+RagingBoltED,
+FlutterManeGF,
+ChienPaoDI
 extends Pokemon {}
 
 
-// --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
-
-fun metaSet: set Pokemon {
-    MiraidonED + OgerponTealG + FarigirafNP + CalyrexPI + UrshifuRapidStrikeWF + WhimsicottGF
-}
-
-
 // ---------- POKEMON TYPES: SET UP DECK TYPES HERE ----------
+// add types to your defined pokemon so we know what types they have
+// format: PokemonName.types = TypeName1 + TypeName2IfApplicable
 
 pred setupMetaPokemon {
-    // UrshifuRapidStrike (Water/Fighting) - most common, appeared in 7/8 teams
+    // Defined in order of usage % on teams
+
+    // Urshifu Rapid Strike (Water/Fighting) - used by 57.23% of players (293/512)
     UrshifuRapidStrikeWF.types = Water + Fighting
-    
-    // Miraidon (Electric/Dragon) - appeared in 3/8 teams
+
+    // Incineroar (Fire/Dark) - used by 33.01% of players (169/512)
+    IncineroarFD.types = Fire + Dark
+
+    // Amoonguss (Grass/Poison) - used by 30.47% of players (156/512)
+    AmoongussGP.types = Grass + Poison
+
+    // Rillaboom (Grass) - used by 26.95% of players (138/512)
+    RillaboomG.types = Grass
+
+    // Ogerpon Hearthflame Mask (Grass/Fire) - used by 26.76% of players (137/512)
+    OgerponHearthflameGF.types = Grass + Fire
+
+    // Raging Bolt (Electric/Dragon) - used by 26.17% of players (134/512)
+    RagingBoltED.types = Electric + Dragon
+
+    // Flutter Mane (Ghost/Fairy) - used by 21.88% of players (112/512)
+    FlutterManeGF.types = Ghost + Fairy
+
+    // Chien Pao (Dark/Ice) - used by 21.68% of players (111/512)
+    ChienPaoDI.types = Dark + Ice
+
+        // Miraidon (Electric/Dragon) - appeared in 3/8 teams
     MiraidonED.types = Electric + Dragon
     
     // Ogerpon (Grass) - appeared in 4/8 teams
@@ -58,6 +83,14 @@ pred setupMetaPokemon {
     
     // Calyrex (Psychic/Ice) - appeared in 3/8 teams
     CalyrexPI.types = Psychic + Ice
+
+}
+
+
+// --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
+
+fun metaSet: set Pokemon {
+    MiraidonED + OgerponTealG + FarigirafNP + CalyrexPI + UrshifuRapidStrikeWF + WhimsicottGF + UrshifuRapidStrikeWF + IncineroarFD + AmoongussGP + RillaboomG + OgerponHearthflameGF + RagingBoltED + FlutterManeGF + ChienPaoDI
 }
 
 // --------- BATTLE PREDICATES ---------
@@ -126,12 +159,15 @@ pred hasAtLeastNTeamOHKOsInSet[breaker1: Pokemon, breaker2: Pokemon, metaPokemon
 
 // used in runs to find all instances of types against a given meta that will deliver n KOs
 pred teamMetaBreaker[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemon, nKOs: Int] {
+    // Ensure they're different and not part of meta
     breaker1 != breaker2
     breaker1 not in metaPokemon
     breaker2 not in metaPokemon
     
+    // They can collectively OHKO exactly nKOs meta Pokémon
     countTeamOHKOs[breaker1, breaker2, metaPokemon] = nKOs
     
+    // No other team can OHKO more meta Pokémon
     all otherBreaker1, otherBreaker2: Pokemon | {
         (otherBreaker1 != breaker1 or otherBreaker2 != breaker2) and
         otherBreaker1 != otherBreaker2 and
