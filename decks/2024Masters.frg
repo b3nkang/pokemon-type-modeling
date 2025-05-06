@@ -5,7 +5,7 @@ open "../1v1.frg"
 
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
-// Top meta Pokémon from World Championships - for reference
+// Top meta Pokémon from 2024 World Championships - Masters Division
 // per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-masters
 
 // --------- NEW DECK: DEFINE POKEMON SIGS IN META -----------

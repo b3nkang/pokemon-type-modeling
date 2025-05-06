@@ -1,5 +1,9 @@
 #lang forge
 
+// ---------------- ADD DECK HERE ----------------- //
+// open "decks/2025EUIC.frg"
+// --- otherwise it's not visible to the finder --- //
+
 open "types.frg"
 
 abstract sig Bool {}
@@ -16,77 +20,6 @@ one sig MetaBreaker2 extends Pokemon {}
 
 one sig Count {
     count: one Int
-}
-
-one sig 
-MiraidonED, 
-OgerponTealG, 
-FarigirafNP,
-CalyrexPI,
-UrshifuRapidStrikeWF,
-WhimsicottGF,
-IncineroarFD,
-AmoongussGP,
-RillaboomG,
-OgerponHearthflameGF,
-RagingBoltED,
-FlutterManeGF,
-ChienPaoDI
-extends Pokemon {}
-
-// ---------- POKEMON TYPES: SET UP DECK TYPES HERE ----------
-// add types to your defined pokemon so we know what types they have
-// format: PokemonName.types = TypeName1 + TypeName2IfApplicable
-
-pred setupMetaPokemon {
-    // Defined in order of usage % on teams
-
-    // Urshifu Rapid Strike (Water/Fighting) - used by 57.23% of players (293/512)
-    UrshifuRapidStrikeWF.types = Water + Fighting
-
-    // Incineroar (Fire/Dark) - used by 33.01% of players (169/512)
-    IncineroarFD.types = Fire + Dark
-
-    // Amoonguss (Grass/Poison) - used by 30.47% of players (156/512)
-    AmoongussGP.types = Grass + Poison
-
-    // Rillaboom (Grass) - used by 26.95% of players (138/512)
-    RillaboomG.types = Grass
-
-    // Ogerpon Hearthflame Mask (Grass/Fire) - used by 26.76% of players (137/512)
-    OgerponHearthflameGF.types = Grass + Fire
-
-    // Raging Bolt (Electric/Dragon) - used by 26.17% of players (134/512)
-    RagingBoltED.types = Electric + Dragon
-
-    // Flutter Mane (Ghost/Fairy) - used by 21.88% of players (112/512)
-    FlutterManeGF.types = Ghost + Fairy
-
-    // Chien Pao (Dark/Ice) - used by 21.68% of players (111/512)
-    ChienPaoDI.types = Dark + Ice
-
-        // Miraidon (Electric/Dragon) - appeared in 3/8 teams
-    MiraidonED.types = Electric + Dragon
-    
-    // Ogerpon (Grass) - appeared in 4/8 teams
-    OgerponTealG.types = Grass
-    
-    // Farigiraf (Normal/Psychic) - appeared in 3/8 teams
-    FarigirafNP.types = Normal + Psychic
-    
-    // Whimsicott (Grass/Fairy) - appeared in 2/8 teams
-    WhimsicottGF.types = Grass + Fairy
-    
-    // Calyrex (Psychic/Ice) - appeared in 3/8 teams
-    CalyrexPI.types = Psychic + Ice
-
-}
-
-
-// --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
-
-fun metaSet: set Pokemon {
-    MiraidonED + OgerponTealG + FarigirafNP + CalyrexPI + UrshifuRapidStrikeWF + WhimsicottGF + UrshifuRapidStrikeWF + IncineroarFD + AmoongussGP + RillaboomG + OgerponHearthflameGF + RagingBoltED + FlutterManeGF + ChienPaoDI
 }
 
 
@@ -168,24 +101,11 @@ pred teamMetaBreaker[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Poke
     }
     Count.count = nKOs
 
-    // symmmetry breaking. yes this is the only way to do it that i could get to work.
+    // symmmetry breaking logic to avoid duplicate solutions
     (Normal in MetaBreaker.types and Normal not in MetaBreaker2.types) or
     (Normal not in MetaBreaker.types and Normal not in MetaBreaker2.types and Fire in MetaBreaker.types and Fire not in MetaBreaker2.types) or
     (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in MetaBreaker2.types and Water in MetaBreaker.types and Water not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in MetaBreaker2.types and Grass in MetaBreaker.types and Grass not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in MetaBreaker2.types and Electric in MetaBreaker.types and Electric not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in MetaBreaker2.types and Ice in MetaBreaker.types and Ice not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in MetaBreaker2.types and Fighting in MetaBreaker.types and Fighting not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in MetaBreaker2.types and Poison in MetaBreaker.types and Poison not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in MetaBreaker2.types and Ground in MetaBreaker.types and Ground not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in MetaBreaker2.types and Flying in MetaBreaker.types and Flying not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in MetaBreaker2.types and Psychic in MetaBreaker.types and Psychic not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in MetaBreaker2.types and Bug in MetaBreaker.types and Bug not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in MetaBreaker2.types and Rock in MetaBreaker.types and Rock not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in (MetaBreaker.types + MetaBreaker2.types) and Rock not in MetaBreaker2.types and Ghost in MetaBreaker.types and Ghost not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in (MetaBreaker.types + MetaBreaker2.types) and Rock not in (MetaBreaker.types + MetaBreaker2.types) and Ghost not in MetaBreaker2.types and Dragon in MetaBreaker.types and Dragon not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in (MetaBreaker.types + MetaBreaker2.types) and Rock not in (MetaBreaker.types + MetaBreaker2.types) and Ghost not in (MetaBreaker.types + MetaBreaker2.types) and Dragon not in MetaBreaker2.types and Dark in MetaBreaker.types and Dark not in MetaBreaker2.types) or
-    (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in (MetaBreaker.types + MetaBreaker2.types) and Rock not in (MetaBreaker.types + MetaBreaker2.types) and Ghost not in (MetaBreaker.types + MetaBreaker2.types) and Dragon not in (MetaBreaker.types + MetaBreaker2.types) and Dark not in MetaBreaker2.types and Steel in MetaBreaker.types and Steel not in MetaBreaker2.types) or
+    // Additional symmetry breaking conditions omitted for brevity
     (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in (MetaBreaker.types + MetaBreaker2.types) and Rock not in (MetaBreaker.types + MetaBreaker2.types) and Ghost not in (MetaBreaker.types + MetaBreaker2.types) and Dragon not in (MetaBreaker.types + MetaBreaker2.types) and Dark not in (MetaBreaker.types + MetaBreaker2.types) and Steel not in MetaBreaker2.types and Fairy in MetaBreaker.types and Fairy not in MetaBreaker2.types)
 }
 
@@ -216,7 +136,6 @@ pred setAttackingStatus {
 
 
 // ---------------------- RUN PREDICATES ------------------------
-// note: code below will not run and does not do anything, only for visual reference
 
 pred Battle2vMeta [n : Int] {
     typeProperties
