@@ -1,7 +1,7 @@
 #lang forge
 
 open "../types.frg"
-open "../1v1.frg"
+open "../2vM.frg"
 
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
@@ -10,17 +10,35 @@ open "../1v1.frg"
 // pokemon's type(s). if the pokemon only has one type, just include the one.
 
 one sig 
+
+// Team 1 below
 Placeholder1WR,
-Placeholder2S
+Placeholder2S,
+
+// Team 2 below
+Placeholder3F,
+Placeholder4FG,
+
+// Team 3 below
+Placeholder5ND,
+Placeholder6BI
+
 extends Pokemon {}
 
 
 // --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
 // add your pokemon into this func which creates a set of your pokemon.
-// this func is used throughout the 1v1.frg logic so you must fill it.
+// this func is used throughout the 2vM.frg logic so you must fill it.
 
 fun metaSet: set Pokemon {
-    Placeholder1WR + Placeholder2S
+    // Team 1 below
+    Placeholder1WR + Placeholder2S +
+
+    // Team 2 below
+    Placeholder3F + Placeholder4FG +
+
+    // Team 3 below
+    Placeholder5ND + Placeholder6BI
 }
 
 
@@ -31,16 +49,22 @@ fun metaSet: set Pokemon {
 pred setupMetaPokemon {
     Placeholder1WR.types = Water + Rock
     Placeholder2S.types = Steel
+
+    Placeholder3F.types = Fire
+    Placeholder4FG.types = Fairy + Grass
+
+    Placeholder5ND.types = Normal + Dark
+    Placeholder6BI.types = Bug + Ice
 }
 
 
 // ------------- DO NOT TOUCH: BATTLE RUN PREDICATE --------------
 
-pred Battle1v1Meta [n : Int] {
+pred Battle2vMeta [n : Int] {
     typeProperties
     numTypes
     setupMetaPokemon
-    metaBreaker[MetaBreaker,metaSet,n]
+    teamMetaBreaker[MetaBreaker, MetaBreaker2, metaSet, n]
     setAttackingStatus
 }
 
@@ -49,4 +73,4 @@ pred Battle1v1Meta [n : Int] {
 // TODO: replace "n" below with the # of pokemon the solver must beat in your deck
 // Constraints: n !> |deck|, solver cannot beat more pokemon than in your deck itself
 
-run { Battle1v1Meta[n] } for 6 Int
+run { Battle2vMeta[n] } for 6 Int
