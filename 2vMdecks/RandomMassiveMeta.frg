@@ -168,3 +168,5 @@ pred Battle2vMeta [n : Int] {
 // (just supply the # of pokemon the solver must beat in the meta)
 
 run { Battle2vMeta[25] } for 6 Int
+
+// RESULTS: Unsat for all 26 Pokemon, but 9 instances of type combinations valid against 25 pokemon.
