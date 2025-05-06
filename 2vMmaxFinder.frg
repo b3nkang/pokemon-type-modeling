@@ -147,91 +147,157 @@ test expect {
     //     }
     // } for 6 Int is sat
 
-    // is there a meta-breaking pair of pokemon that can OHKO at least 13 meta Pokémon?
-    maxIs13: {
+    // // is there a meta-breaking pair of pokemon that can OHKO at least 13 meta Pokémon?
+    // maxIs13: {
+    //     typeProperties
+    //     numTypes
+    //     setupMetaPokemon
+    //     some disj breaker1,breaker2: Pokemon | {
+    //         breaker1 not in metaSet and breaker2 not in metaSet
+    //         hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,13]
+    //     }
+    // } for 6 Int is sat
+
+    // // is there a meta-breaking pair of pokemon that can OHKO at least 14 meta Pokémon?
+    // maxIs14: {
+    //     typeProperties
+    //     numTypes
+    //     setupMetaPokemon
+    //     some disj breaker1,breaker2: Pokemon | {
+    //         breaker1 not in metaSet and breaker2 not in metaSet
+    //         hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,14]
+    //     }
+    // } for 6 Int is sat
+
+    // // is there a meta-breaking pair of pokemon that can OHKO at least 15 meta Pokémon?
+    // maxIs15: {
+    //     typeProperties
+    //     numTypes
+    //     setupMetaPokemon
+    //     some disj breaker1,breaker2: Pokemon | {
+    //         breaker1 not in metaSet and breaker2 not in metaSet
+    //         hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,15]
+    //     }
+    // } for 6 Int is sat
+
+    // // is there a meta-breaking pair of pokemon that can OHKO at least 16 meta Pokémon?
+    // maxIs16: {
+    //     typeProperties
+    //     numTypes
+    //     setupMetaPokemon
+    //     some disj breaker1,breaker2: Pokemon | {
+    //         breaker1 not in metaSet and breaker2 not in metaSet
+    //         hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,16]
+    //     }
+    // } for 6 Int is sat
+
+    // // is there a meta-breaking pair of pokemon that can OHKO at least 17 meta Pokémon?
+    // maxIs17: {
+    //     typeProperties
+    //     numTypes
+    //     setupMetaPokemon
+    //     some disj breaker1,breaker2: Pokemon | {
+    //         breaker1 not in metaSet and breaker2 not in metaSet
+    //         hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,17]
+    //     }
+    // } for 6 Int is sat
+
+    // // is there a meta-breaking pair of pokemon that can OHKO at least 18 meta Pokémon?
+    // maxIs18: {
+    //     typeProperties
+    //     numTypes
+    //     setupMetaPokemon
+    //     some disj breaker1,breaker2: Pokemon | {
+    //         breaker1 not in metaSet and breaker2 not in metaSet
+    //         hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,18]
+    //     }
+    // } for 6 Int is sat
+
+    // // is there a meta-breaking pair of pokemon that can OHKO at least 19 meta Pokémon?
+    // maxIs19: {
+    //     typeProperties
+    //     numTypes
+    //     setupMetaPokemon
+    //     some disj breaker1,breaker2: Pokemon | {
+    //         breaker1 not in metaSet and breaker2 not in metaSet
+    //         hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,19]
+    //     }
+    // } for 6 Int is sat
+
+    // // is there a meta-breaking pair of pokemon that can OHKO at least 20 meta Pokémon?
+    // maxIs20: {
+    //     typeProperties
+    //     numTypes
+    //     setupMetaPokemon
+    //     some disj breaker1,breaker2: Pokemon | {
+    //         breaker1 not in metaSet and breaker2 not in metaSet
+    //         hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,20]
+    //     }
+    // } for 6 Int is sat
+
+    // is there a meta-breaking pair of pokemon that can OHKO at least 21 meta Pokémon?
+    maxIs21: {
         typeProperties
         numTypes
         setupMetaPokemon
         some disj breaker1,breaker2: Pokemon | {
             breaker1 not in metaSet and breaker2 not in metaSet
-            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,13]
+            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,21]
         }
     } for 6 Int is sat
 
-    // is there a meta-breaking pair of pokemon that can OHKO at least 14 meta Pokémon?
-    maxIs14: {
+    // is there a meta-breaking pair of pokemon that can OHKO at least 22 meta Pokémon?
+    maxIs22: {
         typeProperties
         numTypes
         setupMetaPokemon
         some disj breaker1,breaker2: Pokemon | {
             breaker1 not in metaSet and breaker2 not in metaSet
-            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,14]
+            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,22]
+        }
+    } for 6 Int is sat
+    
+    // is there a meta-breaking pair of pokemon that can OHKO at least 23 meta Pokémon?
+    maxIs23: {
+        typeProperties
+        numTypes
+        setupMetaPokemon
+        some disj breaker1,breaker2: Pokemon | {
+            breaker1 not in metaSet and breaker2 not in metaSet
+            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,23]
         }
     } for 6 Int is sat
 
-    // is there a meta-breaking pair of pokemon that can OHKO at least 15 meta Pokémon?
-    maxIs15: {
+    // is there a meta-breaking pair of pokemon that can OHKO at least 24 meta Pokémon?
+    maxIs24: {
         typeProperties
         numTypes
         setupMetaPokemon
         some disj breaker1,breaker2: Pokemon | {
             breaker1 not in metaSet and breaker2 not in metaSet
-            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,15]
+            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,24]
         }
     } for 6 Int is sat
 
-    // is there a meta-breaking pair of pokemon that can OHKO at least 16 meta Pokémon?
-    maxIs16: {
+    // is there a meta-breaking pair of pokemon that can OHKO at least 25 meta Pokémon?
+    maxIs25: {
         typeProperties
         numTypes
         setupMetaPokemon
         some disj breaker1,breaker2: Pokemon | {
             breaker1 not in metaSet and breaker2 not in metaSet
-            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,16]
+            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,25]
         }
     } for 6 Int is sat
 
-    // is there a meta-breaking pair of pokemon that can OHKO at least 17 meta Pokémon?
-    maxIs17: {
+    // is there a meta-breaking pair of pokemon that can OHKO at least 26 meta Pokémon?
+    maxIs26: {
         typeProperties
         numTypes
         setupMetaPokemon
         some disj breaker1,breaker2: Pokemon | {
             breaker1 not in metaSet and breaker2 not in metaSet
-            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,17]
-        }
-    } for 6 Int is sat
-
-    // is there a meta-breaking pair of pokemon that can OHKO at least 18 meta Pokémon?
-    maxIs18: {
-        typeProperties
-        numTypes
-        setupMetaPokemon
-        some disj breaker1,breaker2: Pokemon | {
-            breaker1 not in metaSet and breaker2 not in metaSet
-            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,18]
-        }
-    } for 6 Int is sat
-
-    // is there a meta-breaking pair of pokemon that can OHKO at least 19 meta Pokémon?
-    maxIs19: {
-        typeProperties
-        numTypes
-        setupMetaPokemon
-        some disj breaker1,breaker2: Pokemon | {
-            breaker1 not in metaSet and breaker2 not in metaSet
-            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,19]
-        }
-    } for 6 Int is sat
-
-    // is there a meta-breaking pair of pokemon that can OHKO at least 20 meta Pokémon?
-    maxIs20: {
-        typeProperties
-        numTypes
-        setupMetaPokemon
-        some disj breaker1,breaker2: Pokemon | {
-            breaker1 not in metaSet and breaker2 not in metaSet
-            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,20]
+            hasAtLeastNTeamOHKOsInSet[breaker1,breaker2,metaSet,26]
         }
     } for 6 Int is sat
 
