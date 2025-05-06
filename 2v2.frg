@@ -12,6 +12,7 @@ sig Pokemon {
 }
 
 one sig MetaBreaker extends Pokemon {} // this is the solver's pokemon
+one sig MetaBreaker2 extends Pokemon {}
 
 one sig Count {
     count: one Int
@@ -109,25 +110,40 @@ pred can1v1OHKO [attacker: Pokemon, defender: Pokemon]{
 
 // ------------ COUNTER PREDICATES ------------
 
-fun countOHKOs[breaker: Pokemon, metaPokemon: set Pokemon]: one Int {
-    #{metaPok: Pokemon | metaPok in metaPokemon and can1v1OHKO[breaker, metaPok]}
+fun countTeamOHKOs[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemon]: one Int {
+    #{metaPok: Pokemon | metaPok in metaPokemon and 
+      (can1v1OHKO[breaker1, metaPok] or can1v1OHKO[breaker2, metaPok])}
 }
 
+
 // used in maxFinder.frg to find the theoretical max number of OHKOs in a set
-pred hasAtLeastNOHKOsInSet[breaker: Pokemon, metaPokemon: set Pokemon, n: Int] {
-    breaker not in metaPokemon
-    countOHKOs[breaker, metaPokemon] >= n
+pred hasAtLeastNTeamOHKOsInSet[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemon, n: Int] {
+    breaker1 not in metaPokemon
+    breaker2 not in metaPokemon
+    breaker1 != breaker2
+    countTeamOHKOs[breaker1, breaker2, metaPokemon] >= n
 }
 
 // used in runs to find all instances of types against a given meta that will deliver n KOs
-pred metaBreaker[breaker : Pokemon, metaPokemon: set Pokemon, nKOs: Int] {
-    countOHKOs[breaker, metaPokemon] = nKOs
-    all otherTestPokemon: Pokemon | {
-        (otherTestPokemon != breaker and otherTestPokemon not in metaPokemon) implies
-        countOHKOs[otherTestPokemon, metaPokemon] <= nKOs
+pred teamMetaBreaker[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemon, nKOs: Int] {
+    breaker1 != breaker2
+    breaker1 not in metaPokemon
+    breaker2 not in metaPokemon
+    
+    countTeamOHKOs[breaker1, breaker2, metaPokemon] = nKOs
+    
+    all otherBreaker1, otherBreaker2: Pokemon | {
+        (otherBreaker1 != breaker1 or otherBreaker2 != breaker2) and
+        otherBreaker1 != otherBreaker2 and
+        otherBreaker1 not in metaPokemon and 
+        otherBreaker2 not in metaPokemon
+        implies
+        countTeamOHKOs[otherBreaker1, otherBreaker2, metaPokemon] <= nKOs
     }
+    
     Count.count = nKOs
 }
+
 
 // --------- SPECIFICATION PREDICATES ---------
 
@@ -164,7 +180,7 @@ pred Battle2v6Meta [n : Int] {
     typeProperties
     numTypes
     setupMetaPokemon
-    metaBreaker[MetaBreaker,metaSet,n]
+    teamMetaBreaker[MetaBreaker, MetaBreaker2, metaSet, n]
     setAttackingStatus
 }
 
