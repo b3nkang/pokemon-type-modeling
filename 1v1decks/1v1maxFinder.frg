@@ -1,11 +1,11 @@
 #lang forge
 
 // ---------------- ADD DECK HERE ----------------- //
-open "decks/2025EUIC.frg"
+open "2025EUIC.frg"
 // --- otherwise it's not visible to the finder --- //
 
-open "types.frg"
-open "1v1.frg"
+open "..types.frg"
+open "..1v1.frg"
 
 test expect {
     setupAndTypes: {
