@@ -1,7 +1,7 @@
 #lang forge
 
 open "../types.frg"
-open "../1v1.frg"
+open "../2vM.frg"
 
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
@@ -85,15 +85,15 @@ pred setupMetaPokemon {
 
 // ------------- DO NOT TOUCH: BATTLE RUN PREDICATE --------------
 
-pred Battle1v1Meta [n : Int] {
+pred Battle2vMeta [n : Int] {
     typeProperties
     numTypes
     setupMetaPokemon
-    metaBreaker[MetaBreaker,metaSet,n]
+    teamMetaBreaker[MetaBreaker, MetaBreaker2, metaSet, n]
     setAttackingStatus
 }
 
 // ----------------------- RUN YOUR DECK ------------------------- 
 // (just supply the # of pokemon the solver must beat in the meta)
 
-run { Battle1v1Meta[10] } for 6 Int
+run { Battle2vMeta[12] } for 6 Int

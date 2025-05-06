@@ -1,7 +1,7 @@
 #lang forge
 
 open "../types.frg"
-open "../1v1.frg"
+open "../2vM.frg"
 
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
@@ -11,6 +11,7 @@ open "../1v1.frg"
 // --------- NEW DECK: DEFINE POKEMON SIGS IN META -----------
 
 one sig 
+
 // Juniors
 Juniors_UrshifuWF,
 Juniors_RillaboomG,
@@ -18,6 +19,7 @@ Juniors_CalyrexPI,
 Juniors_RagingBoltED,
 Juniors_FarigirafNP,
 Juniors_OgerponMaskGR,
+
 // Masters
 Masters_MiraidonED, 
 Masters_OgerponTealG,
@@ -25,6 +27,7 @@ Masters_FarigirafNP,
 Masters_CalyrexPI,
 Masters_UrshifuRapidStrikeWF,
 Masters_WhimsicottGF
+
 extends Pokemon {}
 
 // --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
@@ -84,15 +87,15 @@ pred setupMetaPokemon {
 
 // ------------- DO NOT TOUCH: BATTLE RUN PREDICATE --------------
 
-pred Battle1v1Meta [n : Int] {
+pred Battle2vMeta [n : Int] {
     typeProperties
     numTypes
     setupMetaPokemon
-    metaBreaker[MetaBreaker,metaSet,n]
+    teamMetaBreaker[MetaBreaker, MetaBreaker2, metaSet, n]
     setAttackingStatus
 }
 
 // ----------------------- RUN YOUR DECK ------------------------- 
 // (just supply the # of pokemon the solver must beat in the meta)
 
-run { Battle1v1Meta[10] } for 6 Int
+run { Battle2vMeta[12] } for 6 Int
