@@ -11,15 +11,12 @@ sig Pokemon {
     attacking: one Bool
 }
 
-one sig MetaBreaker extends Pokemon {} // this is the solver's pokemon
+one sig MetaBreaker extends Pokemon {}
 one sig MetaBreaker2 extends Pokemon {}
 
 one sig Count {
     count: one Int
 }
-
-
-// --------- NEW DECK: DEFINE POKEMON SIGS IN META -----------
 
 one sig 
 MiraidonED, 
@@ -36,7 +33,6 @@ RagingBoltED,
 FlutterManeGF,
 ChienPaoDI
 extends Pokemon {}
-
 
 // ---------- POKEMON TYPES: SET UP DECK TYPES HERE ----------
 // add types to your defined pokemon so we know what types they have
@@ -92,6 +88,7 @@ pred setupMetaPokemon {
 fun metaSet: set Pokemon {
     MiraidonED + OgerponTealG + FarigirafNP + CalyrexPI + UrshifuRapidStrikeWF + WhimsicottGF + UrshifuRapidStrikeWF + IncineroarFD + AmoongussGP + RillaboomG + OgerponHearthflameGF + RagingBoltED + FlutterManeGF + ChienPaoDI
 }
+
 
 // --------- BATTLE PREDICATES ---------
 
@@ -169,7 +166,6 @@ pred teamMetaBreaker[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Poke
     all otherBreaker1, otherBreaker2: Pokemon | {
         ((otherBreaker1 != breaker1 or otherBreaker2 != breaker2) and breakerProperties[otherBreaker1, otherBreaker2, metaPokemon]) implies countTeamOHKOs[otherBreaker1, otherBreaker2, metaPokemon] <= nKOs
     }
-    
     Count.count = nKOs
 
     // symmmetry breaking. yes this is the only way to do it that i could get to work.
@@ -191,7 +187,6 @@ pred teamMetaBreaker[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Poke
     (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in (MetaBreaker.types + MetaBreaker2.types) and Rock not in (MetaBreaker.types + MetaBreaker2.types) and Ghost not in (MetaBreaker.types + MetaBreaker2.types) and Dragon not in MetaBreaker2.types and Dark in MetaBreaker.types and Dark not in MetaBreaker2.types) or
     (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in (MetaBreaker.types + MetaBreaker2.types) and Rock not in (MetaBreaker.types + MetaBreaker2.types) and Ghost not in (MetaBreaker.types + MetaBreaker2.types) and Dragon not in (MetaBreaker.types + MetaBreaker2.types) and Dark not in MetaBreaker2.types and Steel in MetaBreaker.types and Steel not in MetaBreaker2.types) or
     (Normal not in (MetaBreaker.types + MetaBreaker2.types) and Fire not in (MetaBreaker.types + MetaBreaker2.types) and Water not in (MetaBreaker.types + MetaBreaker2.types) and Grass not in (MetaBreaker.types + MetaBreaker2.types) and Electric not in (MetaBreaker.types + MetaBreaker2.types) and Ice not in (MetaBreaker.types + MetaBreaker2.types) and Fighting not in (MetaBreaker.types + MetaBreaker2.types) and Poison not in (MetaBreaker.types + MetaBreaker2.types) and Ground not in (MetaBreaker.types + MetaBreaker2.types) and Flying not in (MetaBreaker.types + MetaBreaker2.types) and Psychic not in (MetaBreaker.types + MetaBreaker2.types) and Bug not in (MetaBreaker.types + MetaBreaker2.types) and Rock not in (MetaBreaker.types + MetaBreaker2.types) and Ghost not in (MetaBreaker.types + MetaBreaker2.types) and Dragon not in (MetaBreaker.types + MetaBreaker2.types) and Dark not in (MetaBreaker.types + MetaBreaker2.types) and Steel not in MetaBreaker2.types and Fairy in MetaBreaker.types and Fairy not in MetaBreaker2.types)
-
 }
 
 
@@ -220,13 +215,10 @@ pred setAttackingStatus {
 }
 
 
-
-
-
 // ---------------------- RUN PREDICATES ------------------------
 // note: code below will not run and does not do anything, only for visual reference
 
-pred Battle2v6Meta [n : Int] {
+pred Battle2vMeta [n : Int] {
     typeProperties
     numTypes
     setupMetaPokemon
@@ -237,4 +229,4 @@ pred Battle2v6Meta [n : Int] {
 // IMPORTANT NOTE:  ALL RUNS MUST BE DONE WITH AT LEAST 6 INT, SINCE THERE ARE 18 TYPES
 //                  AND WE CANNOT ENFORCE 1 OR 2 MAX TYPES PER POKEMON WITHOUT OVERFLOW
 //                  ISSUES IF WE DO NOT RUN WITH 6 INT (GETS US TO 31)
-run {Battle2v6Meta[6]} for 6 Int
+run {Battle2vMeta[13]} for 6 Int
