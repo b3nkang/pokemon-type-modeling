@@ -143,6 +143,12 @@ pred can1v1OHKO [attacker: Pokemon, defender: Pokemon]{
 
 // ------------ COUNTER PREDICATES ------------
 
+pred breakerProperties[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemon] {
+    breaker1 not in metaPokemon
+    breaker2 not in metaPokemon
+    breaker1 != breaker2
+}
+
 fun countTeamOHKOs[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemon]: one Int {
     #{metaPok: Pokemon | metaPok in metaPokemon and 
       (can1v1OHKO[breaker1, metaPok] or can1v1OHKO[breaker2, metaPok])}
@@ -151,30 +157,17 @@ fun countTeamOHKOs[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemo
 
 // used in maxFinder.frg to find the theoretical max number of OHKOs in a set
 pred hasAtLeastNTeamOHKOsInSet[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemon, n: Int] {
-    breaker1 not in metaPokemon
-    breaker2 not in metaPokemon
-    breaker1 != breaker2
+    breakerProperties[breaker1, breaker2, metaPokemon]
     countTeamOHKOs[breaker1, breaker2, metaPokemon] >= n
 }
 
 // used in runs to find all instances of types against a given meta that will deliver n KOs
 pred teamMetaBreaker[breaker1: Pokemon, breaker2: Pokemon, metaPokemon: set Pokemon, nKOs: Int] {
-    // Ensure they're different and not part of meta
-    breaker1 != breaker2
-    breaker1 not in metaPokemon
-    breaker2 not in metaPokemon
-    
-    // They can collectively OHKO exactly nKOs meta Pokémon
+    breakerProperties[breaker1, breaker2, metaPokemon]
     countTeamOHKOs[breaker1, breaker2, metaPokemon] = nKOs
     
-    // No other team can OHKO more meta Pokémon
     all otherBreaker1, otherBreaker2: Pokemon | {
-        (otherBreaker1 != breaker1 or otherBreaker2 != breaker2) and
-        otherBreaker1 != otherBreaker2 and
-        otherBreaker1 not in metaPokemon and 
-        otherBreaker2 not in metaPokemon
-        implies
-        countTeamOHKOs[otherBreaker1, otherBreaker2, metaPokemon] <= nKOs
+        ((otherBreaker1 != breaker1 or otherBreaker2 != breaker2) and breakerProperties[otherBreaker1, otherBreaker2, metaPokemon]) implies countTeamOHKOs[otherBreaker1, otherBreaker2, metaPokemon] <= nKOs
     }
     
     Count.count = nKOs
