@@ -1,11 +1,11 @@
 #lang forge
 
 // ---------------- ADD DECK HERE ----------------- //
-open "2vMdecks/RandomMassiveMeta.frg"
+open "RandomMassiveMeta.frg"
 // --- otherwise it's not visible to the finder --- //
 
-open "types.frg"
-open "2vM.frg"
+open "../types.frg"
+open "../2vM.frg"
 
 test expect {
     setupAndTypes: {
