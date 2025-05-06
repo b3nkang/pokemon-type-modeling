@@ -1,28 +1,28 @@
 #lang forge
 
 open "../types.frg"
-open "../1v1.frg"
+open "../1vM.frg"
 
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
-// Top meta Pokémon from 2024 World Championships - Senior Division
-// per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-senior
+// Top meta Pokémon from 2024 World Championships - Junior Division
+// per https://www.pokemon.com/us/play-pokemon/worlds/2024/vgc-junior
 
 // --------- NEW DECK: DEFINE POKEMON SIGS IN META -----------
 
 one sig 
-UrshifuRapidStrikeWF,
+UrshifuWF,
 RillaboomG,
-AmoongussGP,
-RagingBoltED,
 CalyrexPI,
-FarigirafNP
+RagingBoltED,
+FarigirafNP,
+OgerponMaskGR
 extends Pokemon {}
 
 // --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
 
 fun metaSet: set Pokemon {
-    UrshifuRapidStrikeWF + RillaboomG + AmoongussGP + RagingBoltED + CalyrexPI + FarigirafNP
+    UrshifuWF + RillaboomG + CalyrexPI + RagingBoltED + FarigirafNP + OgerponMaskGR
 }
 
 // ---------- POKEMON TYPES: SET UP DECK TYPES HERE ----------
@@ -30,23 +30,26 @@ fun metaSet: set Pokemon {
 pred setupMetaPokemon {
     // Top 6 most common Pokémon based on the quarterfinals teams and up
 
-    // Urshifu Rapid Strike (Water/Fighting) - appeared in 6/8 teams
-    UrshifuRapidStrikeWF.types = Water + Fighting
+    // Urshifu (Water/Fighting) or (Dark/Fighting) - appeared in 7/8 teams
+    // (Rapid Strike was more common, so using Water/Fighting typing)
+    UrshifuWF.types = Water + Fighting
     
-    // Rillaboom (Grass) - appeared in 4/8 teams
+    // Rillaboom (Grass) - appeared in 6/8 teams
     RillaboomG.types = Grass
     
-    // Amoonguss (Grass/Poison) - appeared in 3/8 teams
-    AmoongussGP.types = Grass + Poison
+    // Calyrex (Psychic/Ice) or (Ghost/Psychic) - appeared in 5/8 teams 
+    // (Ice Rider was more common, so using Psychic/Ice typing)
+    CalyrexPI.types = Psychic + Ice
     
     // Raging Bolt (Electric/Dragon) - appeared in 5/8 teams
     RagingBoltED.types = Electric + Dragon
     
-    // Calyrex (Psychic/Ice) - appeared in 3/8 teams
-    CalyrexPI.types = Psychic + Ice
-    
-    // Farigiraf (Normal/Psychic) - appeared in 3/8 teams 
+    // Farigiraf (Normal/Psychic) - appeared in 4/8 teams
     FarigirafNP.types = Normal + Psychic
+    
+    // Ogerpon with Mask (Grass/Rock) - appeared in 3/8 teams
+    // (Cornerstone Mask was more common)
+    OgerponMaskGR.types = Grass + Rock
 }
 
 // ------------- DO NOT TOUCH: BATTLE RUN PREDICATE --------------

@@ -4,8 +4,8 @@
 open "2025EUIC.frg"
 // --- otherwise it's not visible to the finder --- //
 
-open "..types.frg"
-open "..1v1.frg"
+open "../types.frg"
+open "../1vM.frg"
 
 test expect {
     setupAndTypes: {

@@ -1,7 +1,7 @@
 #lang forge
 
 open "../types.frg"
-open "../1v1.frg"
+open "../1vM.frg"
 
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 

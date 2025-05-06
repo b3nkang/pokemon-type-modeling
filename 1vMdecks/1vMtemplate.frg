@@ -1,7 +1,7 @@
 #lang forge
 
 open "../types.frg"
-open "../1v1.frg"
+open "../1vM.frg"
 
 // ---- INCLUDE ABOVE ALWAYS, DO NOT CHANGE ----- //
 
@@ -17,7 +17,7 @@ extends Pokemon {}
 
 // --------- POKEMON SET: POPULATE WITH YOUR POKEMON ---------
 // add your pokemon into this func which creates a set of your pokemon.
-// this func is used throughout the 1v1.frg logic so you must fill it.
+// this func is used throughout the 1vM.frg logic so you must fill it.
 
 fun metaSet: set Pokemon {
     Placeholder1WR + Placeholder2S
