@@ -1,6 +1,8 @@
 # Pokémon Type Advantage Modeling
 CS 1710 – Logic for Systems
 
+[Demo Video](https://drive.google.com/file/d/1_REff1rMY1jQhyx4F6gv2xh7heS-ao_y/view?usp=sharing)
+
 ## Project Overview
 
 This project uses formal verification through the Forge modeling language to analyze Pokémon type matchups and competitive team building strategies. We explore optimal counter-strategies across different competitive formats and eras by modeling the complex type effectiveness system from Pokémon games.
