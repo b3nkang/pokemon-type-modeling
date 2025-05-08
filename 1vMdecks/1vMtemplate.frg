@@ -49,4 +49,4 @@ pred Battle1v1Meta [n : Int] {
 // TODO: replace "n" below with the # of pokemon the solver must beat in your deck
 // Constraints: n !> |deck|, solver cannot beat more pokemon than in your deck itself
 
-run { Battle1v1Meta[n] } for 6 Int
+run { Battle1v1Meta[2] } for 6 Int
